@@ -1,1 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wipro Technical Assessment</title>
+    <style>
+        /* CSS for mobile-friendly view */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 95%;
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        header {
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #007bff;
+            margin-bottom: 20px;
+        }
+        .timer-box {
+            background-color: #ffdddd;
+            color: #d9534f;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 25px;
+            border: 1px solid #d9534f;
+        }
+        .question-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fafafa;
+        }
+        .question-section h2 {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-top: 0;
+            color: #007bff;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px dashed #eee;
+        }
+        .question p {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+        .option-group label {
+            display: block;
+            margin-bottom: 5px;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .option-group label:hover {
+            background-color: #e9f5ff;
+        }
+        input[type="text"], input[type="tel"] {
+            width: 90%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
 
+<div class="container">
+    <header>
+        <h1>Wipro Technical Assessment</h1>
+        <p>25 Multiple-Choice Questions | Time Limit: 30 Minutes</p>
+    </header>
+
+    <div class="timer-box">
+        Time Remaining: <span id="timer">30:00</span>
+    </div>
+
+    <form id="assessmentForm">
+        <div class="question-section">
+            <h2>Registration Details</h2>
+            <div class="question">
+                <label for="regName">Full Name:</label>
+                <input type="text" id="regName" name="regName" required>
+            </div>
+            <div class="question">
+                <label for="regMobile">Mobile Number:</label>
+                <input type="tel" id="regMobile" name="regMobile" required>
+            </div>
+        </div>
+        
+        <div class="question-section">
+            <h2>Section A: Quantitative Aptitude (7 Questions)</h2>
+            <div class="question" id="q1">
+                <p>1. A number is divided by 7 leaves remainder 3. When divided by 21 it leaves remainder:</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q1" value="A" required> A) 1</label>
+                    <label><input type="radio" name="q1" value="B"> B) 2</label>
+                    <label><input type="radio" name="q1" value="C"> C) 3</label>
+                    <label><input type="radio" name="q1" value="D"> D) Cannot be determined</label>
+                </div>
+            </div>
+            
+            <div class="question" id="q2">
+                <p>2. If 2^x × 4^y = 512, and x + y = 6, find x:</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q2" value="A" required> A) 1</label>
+                    <label><input type="radio" name="q2" value="B"> B) 2</label>
+                    <label><input type="radio" name="q2" value="C"> C) 3</label>
+                    <label><input type="radio" name="q2" value="D"> D) 4</label>
+                </div>
+            </div>
+
+            <div class="question" id="q3">
+                <p>3. If 4 men and 6 women can complete a work in 8 days, and 2 men and 3 women can complete in 20 days, then 1 woman alone can complete the work in:</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q3" value="A" required> A) 64 days</label>
+                    <label><input type="radio" name="q3" value="B"> B) 80 days</label>
+                    <label><input type="radio" name="q3" value="C"> C) 96 days</label>
+                    <label><input type="radio" name="q3" value="D"> D) 120 days</label>
+                </div>
+            </div>
+
+            <div class="question" id="q4">
+                <p>4. If the sum of n natural numbers is 465, find n:</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q4" value="A" required> A) 29</label>
+                    <label><input type="radio" name="q4" value="B"> B) 30</label>
+                    <label><input type="radio" name="q4" value="C"> C) 31</label>
+                    <label><input type="radio" name="q4" value="D"> D) 32</label>
+                </div>
+            </div>
+
+            <div class="question" id="q5">
+                <p>5. The difference between simple and compound interest on ₹20,000 for 2 years at 10% is:</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q5" value="A" required> A) ₹200</label>
+                    <label><input type="radio" name="q5" value="B"> B) ₹210</label>
+                    <label><input type="radio" name="q5" value="C"> C) ₹220</label>
+                    <label><input type="radio" name="q5" value="D"> D) ₹240</label>
+                </div>
+            </div>
+
+            <div class="question" id="q6">
+                <p>6. If log(2x) + log(5x) = 2, then x =</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q6" value="A" required> A) 0.1</label>
+                    <label><input type="radio" name="q6" value="B"> B) 0.2</label>
+                    <label><input type="radio" name="q6" value="C"> C) 1</label>
+                    <label><input type="radio" name="q6" value="D"> D) 2</label>
+                </div>
+            </div>
+
+            <div class="question" id="q7">
+                <p>7. Solve: 1/(x+1) + 1/(x-1) = 1/2</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q7" value="A" required> A) 1</label>
+                    <label><input type="radio" name="q7" value="B"> B) 2</label>
+                    <label><input type="radio" name="q7" value="C"> C) 3</label>
+                    <label><input type="radio" name="q7" value="D"> D) 4</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-section">
+            <h2>Section B: Logical Reasoning (7 Questions)</h2>
+            <div class="question" id="q8">
+                <p>8. Series: 3, 9, 21, 45, 93, ___</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q8" value="A" required> A) 189</label>
+                    <label><input type="radio" name="q8" value="B"> B) 183</label>
+                    <label><input type="radio" name="q8" value="C"> C) 187</label>
+                    <label><input type="radio" name="q8" value="D"> D) 197</label>
+                </div>
+            </div>
+
+            <div class="question" id="q9">
+                <p>9. Code: If FLOWER = GQPXGT, then FUTURE = ?</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q9" value="A" required> A) GVVXTF</label>
+                    <label><input type="radio" name="q9" value="B"> B) GVWVTF</label>
+                    <label><input type="radio" name="q9" value="C"> C) GVVWTF</label>
+                    <label><input type="radio" name="q9" value="D"> D) HVWXTF</label>
+                </div>
+            </div>
+            
+            <div class="question" id="q10">
+                <p>10. Pointing to a photo, Rahul said, “He is the father of my daughter’s brother.” Photo is of:</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q10" value="A" required> A) Rahul</label>
+                    <label><input type="radio" name="q10" value="B"> B) Rahul’s father</label>
+                    <label><input type="radio" name="q10" value="C"> C) Rahul’s son</label>
+                    <label><input type="radio" name="q10" value="D"> D) Rahul’s brother</label>
+                </div>
+            </div>
+
+            <div class="question" id="q11">
+                <p>11. A is the sister of B, C is the father of B, D is the husband of A. Which relation holds?</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q11" value="A" required> A) C is father-in-law of D</label>
+                    <label><input type="radio" name="q11" value="B"> B) C is brother of D</label>
+                    <label><input type="radio" name="q11" value="C"> C) D is brother-in-law of C</label>
+                    <label><input type="radio" name="q11" value="D"> D) D is son of C</label>
+                </div>
+            </div>
+
+            <div class="question" id="q12">
+                <p>12. Fill the missing odd term: 7, 10, 16, 28, 52, ___</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q12" value="A" required> A) 80</label>
+                    <label><input type="radio" name="q12" value="B"> B) 86</label>
+                    <label><input type="radio" name="q12" value="C"> C) 94</label>
+                    <label><input type="radio" name="q12" value="D"> D) 100</label>
+                </div>
+            </div>
+
+            <div class="question" id="q13">
+                <p>13. Statement: All pens are books. All books are papers. Which conclusion is valid?</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q13" value="A" required> A) All pens are papers</label>
+                    <label><input type="radio" name="q13" value="B"> B) Some pens are papers</label>
+                    <label><input type="radio" name="q13" value="C"> C) All papers are pens</label>
+                    <label><input type="radio" name="q13" value="D"> D) Some books are pens</label>
+                </div>
+            </div>
+
+            <div class="question" id="q14">
+                <p>14. Choose the odd matrix: (Implied to be sets of numbers)</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q14" value="A" required> A) 2, 4, 6, 8</label>
+                    <label><input type="radio" name="q14" value="B"> B) 3, 5, 7, 9</label>
+                    <label><input type="radio" name="q14" value="C"> C) 11, 13, 15, 17</label>
+                    <label><input type="radio" name="q14" value="D"> D) 10, 12, 14, 16</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-section">
+            <h2>Section C: English (6 Questions)</h2>
+            <div class="question" id="q15">
+                <p>15. Correct sentence:</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q15" value="A" required> A) Neither John nor his friends was present</label>
+                    <label><input type="radio" name="q15" value="B"> B) Neither John nor his friends were present</label>
+                    <label><input type="radio" name="q15" value="C"> C) Neither John nor his friends are present</label>
+                    <label><input type="radio" name="q15" value="D"> D) Neither John nor his friends have present</label>
+                </div>
+            </div>
+
+            <div class="question" id="q16">
+                <p>16. Choose synonym of AUSPICIOUS:</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q16" value="A" required> A) Unfavorable</label>
+                    <label><input type="radio" name="q16" value="B"> B) Threatening</label>
+                    <label><input type="radio" name="q16" value="C"> C) Lucky</label>
+                    <label><input type="radio" name="q16" value="D"> D) Rare</label>
+                </div>
+            </div>
+
+            <div class="question" id="q17">
+                <p>17. Identify error: “Each of the participants have submitted their forms.”</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q17" value="A" required> A) Each of</label>
+                    <label><input type="radio" name="q17" value="B"> B) participants</label>
+                    <label><input type="radio" name="q17" value="C"> C) have submitted</label>
+                    <label><input type="radio" name="q17" value="D"> D) their forms</label>
+                </div>
+            </div>
+            
+            <div class="question" id="q18">
+                <p>18. Antonym of Lucid:</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q18" value="A" required> A) Clear</label>
+                    <label><input type="radio" name="q18" value="B"> B) Rational</label>
+                    <label><input type="radio" name="q18" value="C"> C) Confusing</label>
+                    <label><input type="radio" name="q18" value="D"> D) Bright</label>
+                </div>
+            </div>
+
+            <div class="question" id="q19">
+                <p>19. Meaning of idiom: “To take with a grain of salt”</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q19" value="A" required> A) To believe completely</label>
+                    <label><input type="radio" name="q19" value="B"> B) To disbelieve slightly</label>
+                    <label><input type="radio" name="q19" value="C"> C) To exaggerate</label>
+                    <label><input type="radio" name="q19" value="D"> D) To ignore</label>
+                </div>
+            </div>
+
+            <div class="question" id="q20">
+                <p>20. Which sentence is in passive voice?</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q20" value="A" required> A) He is writing a letter</label>
+                    <label><input type="radio" name="q20" value="B"> B) A letter is written by him</label>
+                    <label><input type="radio" name="q20" value="C"> C) He will write a letter</label>
+                    <label><input type="radio" name="q20" value="D"> D) He had written a letter</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-section">
+            <h2>Section D: Technical (5 Questions)</h2>
+            <div class="question" id="q21">
+                <p>21. Worst-case time complexity of QuickSort:</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q21" value="A" required> A) O(n)</label>
+                    <label><input type="radio" name="q21" value="B"> B) O(n log n)</label>
+                    <label><input type="radio" name="q21" value="C"> C) O(n^2)</label>
+                    <label><input type="radio" name="q21" value="D"> D) O(log n)</label>
+                </div>
+            </div>
+
+            <div class="question" id="q22">
+                <p>22. Which of the following is not a feature of OOP?</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q22" value="A" required> A) Encapsulation</label>
+                    <label><input type="radio" name="q22" value="B"> B) Polymorphism</label>
+                    <label><input type="radio" name="q22" value="C"> C) Recursion</label>
+                    <label><input type="radio" name="q22" value="D"> D) Inheritance</label>
+                </div>
+            </div>
+
+            <div class="question" id="q23">
+                <p>23. Which data structure is used for BFS?</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q23" value="A" required> A) Stack</label>
+                    <label><input type="radio" name="q23" value="B"> B) Queue</label>
+                    <label><input type="radio" name="q23" value="C"> C) Tree</label>
+                    <label><input type="radio" name="q23" value="D"> D) Heap</label>
+                </div>
+            </div>
+            
+            <div class="question" id="q24">
+                <p>24. Which index structure is used in relational DBs?</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q24" value="A" required> A) AVL Tree</label>
+                    <label><input type="radio" name="q24" value="B"> B) B+ Tree</label>
+                    <label><input type="radio" name="q24" value="C"> C) Hash Tree</label>
+                    <label><input type="radio" name="q24" value="D"> D) Red-Black Tree</label>
+                </div>
+            </div>
+
+            <div class="question" id="q25">
+                <p>25. Output of code: <code>int a=5;printf("%d %d", a++, ++a);</code></p>
+                <div class="option-group">
+                    <label><input type="radio" name="q25" value="A" required> A) 5 6</label>
+                    <label><input type="radio" name="q25" value="B"> B) 6 7</label>
+                    <label><input type="radio" name="q25" value="C"> C) Undefined behavior</label>
+                    <label><input type="radio" name="q25" value="D"> D) 6 6</label>
+                </div>
+            </div>
+        </div>
+
+        <input type="submit" value="Final Submit" id="submitButton">
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('assessmentForm');
+        const timerDisplay = document.getElementById('timer');
+        const submitButton = document.getElementById('submitButton');
+        const totalTimeMinutes = 30;
+        let timeRemaining = totalTimeMinutes * 60; // 1800 seconds
+        let timerInterval;
+
+        // Function to disable all form elements (prevents re-entry/changes)
+        const disableForm = (message) => {
+            const inputs = form.querySelectorAll('input, select, textarea, button');
+            inputs.forEach(input => input.disabled = true);
+            submitButton.value = message;
+            submitButton.style.backgroundColor = '#d9534f'; 
+            submitButton.disabled = true;
+            clearInterval(timerInterval); // Stop the timer
+        };
+
+        // Submission Logic
+        const handleSubmit = (event) => {
+            if (event) event.preventDefault(); 
+
+            // 1. Collect Data (This would be sent to a server in a real assessment)
+            const formData = new FormData(form);
+            let results = {};
+            for (let [key, value] of formData.entries()) {
+                results[key] = value;
+            }
+
+            console.log("Assessment Submitted. Results:", results);
+            
+            // 2. Disable form to prevent re-submission or re-entry
+            disableForm("Assessment Submitted Successfully!");
+
+            // In a real application, you'd send the 'results' data via a fetch() call here.
+        };
+
+        // Timer Logic
+        const startTimer = () => {
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+
+                // Format time as MM:SS
+                const formattedTime = 
+                    (minutes < 10 ? '0' : '') + minutes + ':' + 
+                    (seconds < 10 ? '0' : '') + seconds;
+                
+                timerDisplay.textContent = formattedTime;
+
+                if (timeRemaining <= 300) { // Highlight red for last 5 minutes
+                    const timerBox = timerDisplay.closest('.timer-box');
+                    timerBox.style.backgroundColor = '#ffc0c0';
+                    timerBox.style.borderColor = '#d9534f';
+                }
+
+                if (timeRemaining <= 0) {
+                    // Time's up! Auto-submit
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "00:00";
+                    alert("Time is up! The assessment will now auto-submit.");
+                    handleSubmit(); // Auto-submit the form
+                    disableForm("Time Over. Auto-Submitted.");
+                    return;
+                }
+
+                timeRemaining--;
+            }, 1000); // Update every 1 second
+        };
+
+        // Event Listeners
+        form.addEventListener('submit', handleSubmit);
+
+        // Start the assessment timer
+        startTimer();
+    });
+</script>
+
+</body>
+</html>
