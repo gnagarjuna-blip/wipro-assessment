@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wipro Technical Assessment</title>
     <style>
-        /* CSS for mobile-friendly view */
+        /* CSS is in the style block for easy pasting */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -71,7 +71,7 @@
         .option-group label:hover {
             background-color: #e9f5ff;
         }
-        input[type="text"], input[type="tel"] {
+        input[type="text"], input[type="tel"], input[type="email"], input[type="number"], select {
             width: 90%;
             padding: 10px;
             margin-top: 5px;
@@ -102,11 +102,11 @@
 <div class="container">
     <header>
         <h1>Wipro Technical Assessment</h1>
-        <p>25 Multiple-Choice Questions | Time Limit: 30 Minutes</p>
+        <p>35 Multiple-Choice Questions | Time Limit: 45 Minutes</p>
     </header>
 
     <div class="timer-box">
-        Time Remaining: <span id="timer">30:00</span>
+        Time Remaining: <span id="timer">45:00</span>
     </div>
 
     <form id="assessmentForm">
@@ -117,10 +117,22 @@
                 <input type="text" id="regName" name="regName" required>
             </div>
             <div class="question">
-                <label for="regEmail">Email Id:</label>
-                <input type="tel" id="regEmail" name="regEmail" required>
+                <label for="regMobile">Mobile Number:</label>
+                <input type="tel" id="regMobile" name="regMobile" required>
             </div>
-        </div>
+            <div class="question">
+                <label for="regEmail">Email ID:</label>
+                <input type="email" id="regEmail" name="regEmail" required>
+            </div>
+            <div class="question">
+                <label for="regBranch">Branch:</label>
+                <input type="text" id="regBranch" name="regBranch" required>
+            </div>
+            <div class="question">
+                <label for="regScore">Preliminary Score (%):</label>
+                <input type="number" id="regScore" name="regScore" min="0" max="100" required>
+            </div>
+            </div>
         
         <div class="question-section">
             <h2>Section A: Quantitative Aptitude (7 Questions)</h2>
@@ -384,6 +396,110 @@
             </div>
         </div>
 
+        <div class="question-section">
+            <h2>Section E: General & Technical Mix (10 Questions)</h2>
+            <div class="question" id="q26">
+                <p>26. What is the output of the following Python code? <code>print(2**3**2)</code></p>
+                <div class="option-group">
+                    <label><input type="radio" name="q26" value="A" required> A) 64</label>
+                    <label><input type="radio" name="q26" value="B"> B) 512</label>
+                    <label><input type="radio" name="q26" value="C"> C) 729</label>
+                    <label><input type="radio" name="q26" value="D"> D) 36</label>
+                </div>
+            </div>
+            
+            <div class="question" id="q27">
+                <p>27. Which of the following is a non-linear data structure?</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q27" value="A" required> A) Array</label>
+                    <label><input type="radio" name="q27" value="B"> B) Linked List</label>
+                    <label><input type="radio" name="q27" value="C"> C) Queue</label>
+                    <label><input type="radio" name="q27" value="D"> D) Tree</label>
+                </div>
+            </div>
+
+            <div class="question" id="q28">
+                <p>28. If the cost price of 20 articles is equal to the selling price of 16 articles, the profit percentage is:</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q28" value="A" required> A) 20%</label>
+                    <label><input type="radio" name="q28" value="B"> B) 25%</label>
+                    <label><input type="radio" name="q28" value="C"> C) 30%</label>
+                    <label><input type="radio" name="q28" value="D"> D) 33.33%</label>
+                </div>
+            </div>
+
+            <div class="question" id="q29">
+                <p>29. What is the difference between a process and a thread?</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q29" value="A" required> A) Threads share memory, processes do not.</label>
+                    <label><input type="radio" name="q29" value="B"> B) Threads are lightweight, processes are heavy-weight.</label>
+                    <label><input type="radio" name="q29" value="C"> C) Threads are within a process, processes are independent.</label>
+                    <label><input type="radio" name="q29" value="D"> D) All of the above</label>
+                </div>
+            </div>
+            
+            <div class="question" id="q30">
+                <p>30. Synonym of 'Ephemeral':</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q30" value="A" required> A) Permanent</label>
+                    <label><input type="radio" name="q30" value="B"> B) Short-lived</label>
+                    <label><input type="radio" name="q30" value="C"> C) Heavenly</label>
+                    <label><input type="radio" name="q30" value="D"> D) Eternal</label>
+                </div>
+            </div>
+
+            <div class="question" id="q31">
+                <p>31. Find the next term in the series: 1, 8, 27, 64, ___</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q31" value="A" required> A) 100</label>
+                    <label><input type="radio" name="q31" value="B"> B) 125</label>
+                    <label><input type="radio" name="q31" value="C"> C) 81</label>
+                    <label><input type="radio" name="q31" value="D"> D) 128</label>
+                </div>
+            </div>
+
+            <div class="question" id="q32">
+                <p>32. The process of converting an object into a stream of bytes is called:</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q32" value="A" required> A) Marshaling</label>
+                    <label><input type="radio" name="q32" value="B"> B) Serialization</label>
+                    <label><input type="radio" name="q32" value="C"> C) Deserialization</label>
+                    <label><input type="radio" name="q32" value="D"> D) Encapsulation</label>
+                </div>
+            </div>
+
+            <div class="question" id="q33">
+                <p>33. The maximum number of nodes in a binary tree of height 'h' (where root is height 0) is:</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q33" value="A" required> A) 2^(h+1) - 1</label>
+                    <label><input type="radio" name="q33" value="B"> B) 2^h</label>
+                    <label><input type="radio" name="q33" value="C"> C) 2^(h-1)</label>
+                    <label><input type="radio" name="q33" value="D"> D) 2h + 1</label>
+                </div>
+            </div>
+
+            <div class="question" id="q34">
+                <p>34. What is 'Normalization' in a Database Management System?</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q34" value="A" required> A) Reducing data redundancy</label>
+                    <label><input type="radio" name="q34" value="B"> B) Protecting data integrity</label>
+                    <label><input type="radio" name="q34" value="C"> C) Speeding up query execution</label>
+                    <label><input type="radio" name="q34" value="D"> D) Both A and B</label>
+                </div>
+            </div>
+
+            <div class="question" id="q35">
+                <p>35. Complete the idiom: 'A penny for your ___'</p>
+                <div class="option-group">
+                    <label><input type="radio" name="q35" value="A" required> A) Time</label>
+                    <label><input type="radio" name="q35" value="B"> B) Thoughts</label>
+                    <label><input type="radio" name="q35" value="C"> C) Trouble</label>
+                    <label><input type="radio" name="q35" value="D"> D) Effort</label>
+                </div>
+            </div>
+        </div>
+
+
         <input type="submit" value="Final Submit" id="submitButton">
     </form>
 </div>
@@ -393,8 +509,9 @@
         const form = document.getElementById('assessmentForm');
         const timerDisplay = document.getElementById('timer');
         const submitButton = document.getElementById('submitButton');
-        const totalTimeMinutes = 30;
-        let timeRemaining = totalTimeMinutes * 60; // 1800 seconds
+        // UPDATED TIME: 45 minutes
+        const totalTimeMinutes = 45; 
+        let timeRemaining = totalTimeMinutes * 60; // 2700 seconds
         let timerInterval;
 
         // Function to disable all form elements (prevents re-entry/changes)
@@ -418,12 +535,18 @@
                 results[key] = value;
             }
 
-            console.log("Assessment Submitted. Results:", results);
+            // In a real application, you'd send the 'results' data via a fetch() call here.
+            console.log("Assessment Submitted. Registration Data:", {
+                Name: results.regName,
+                Mobile: results.regMobile,
+                Email: results.regEmail,
+                Branch: results.regBranch,
+                Score: results.regScore
+            });
+            console.log("Assessment Submitted. Answers:", results);
             
             // 2. Disable form to prevent re-submission or re-entry
             disableForm("Assessment Submitted Successfully!");
-
-            // In a real application, you'd send the 'results' data via a fetch() call here.
         };
 
         // Timer Logic
