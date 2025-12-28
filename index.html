@@ -3,109 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wipro Elite NTH | Responsive Assessment</title>
+    <title>Wipro Elite NTH | Secure Portal</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap');
 
         :root { 
             --primary: #4f46e5; 
-            --primary-light: #eef2ff;
             --success: #10b981; 
-            --danger: #ef4444; 
             --bg-page: #f1f5f9; 
             --bg-card: #ffffff;
             --text-dark: #0f172a; 
-            --input-field-bg: #e2e8f0; 
+            --input-field-bg: #e2e8f0; /* Slate-Grey for fields */
             --option-bg: #f8fafc;
             --font-main: 'Inter', sans-serif;
+            --font-heading: 'Poppins', sans-serif;
         }
 
-        body { font-family: var(--font-main); background-color: var(--bg-page); margin: 0; user-select: none; color: var(--text-dark); -webkit-tap-highlight-color: transparent; }
+        body { 
+            font-family: var(--font-main); 
+            background-color: var(--bg-page); 
+            margin: 0; 
+            user-select: none; 
+            color: var(--text-dark);
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        #lockOverlay { display: none; position: fixed; inset: 0; background: #020617; z-index: 10000; color: white; text-align: center; justify-content: center; align-items: center; flex-direction: column; padding: 20px; }
+        /* Fullscreen Security Overlay */
+        #lockOverlay { 
+            display: none; position: fixed; inset: 0; background: #020617; 
+            z-index: 10000; color: white; text-align: center; 
+            justify-content: center; align-items: center; flex-direction: column; padding: 20px; 
+        }
 
-        .container { max-width: 1100px; margin: 20px auto; background: var(--bg-card); padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); }
-        
-        header { text-align: center; border-bottom: 2px solid var(--primary-light); margin-bottom: 20px; padding-bottom: 15px; }
-        header h1 { font-family: 'Poppins'; color: var(--primary); margin: 0; font-size: 20px; }
+        .container { 
+            max-width: 1100px; margin: 15px auto; background: var(--bg-card); 
+            padding: 20px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+        }
 
-        /* Responsive Layout Engine */
+        header { text-align: center; border-bottom: 2px solid #eef2ff; margin-bottom: 20px; padding-bottom: 10px; }
+        header h1 { font-family: var(--font-heading); color: var(--primary); font-size: 20px; margin: 0; }
+
+        /* Responsive Grid: Stacks on Mobile */
         .exam-layout { display: none; flex-direction: column; gap: 20px; }
-        
-        /* Desktop: Side-by-Side | Mobile: Stacked */
-        @media (min-width: 850px) {
+        @media (min-width: 900px) {
             .exam-layout { flex-direction: row; }
-            .container { margin: 40px auto; padding: 40px; }
+            .container { margin: 30px auto; padding: 35px; }
             header h1 { font-size: 26px; }
         }
 
         .main-exam-area { flex: 3; width: 100%; }
-        .sidebar { flex: 1; background: var(--primary-light); padding: 20px; border-radius: 15px; height: fit-content; }
-
-        @media (min-width: 850px) {
-            .sidebar { position: sticky; top: 20px; }
+        .sidebar { 
+            flex: 1; background: #eef2ff; padding: 20px; border-radius: 12px; 
+            height: fit-content; border: 1px solid #d1d5db;
         }
 
-        .timer-strip { background: #334155; color: #fff; padding: 12px; border-radius: 10px; text-align: center; font-size: 1.1em; font-weight: bold; margin-bottom: 20px; }
+        .timer-strip { 
+            background: #1e293b; color: #fff; padding: 12px; border-radius: 8px; 
+            text-align: center; font-family: var(--font-heading); font-weight: bold; margin-bottom: 20px; 
+        }
 
         .q-meta { color: var(--primary); font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; display: block; }
-        .q-text { font-size: 17px; line-height: 1.5; color: var(--text-dark); margin-bottom: 20px; font-weight: 600; white-space: pre-line; }
+        .q-text { font-size: 17px; line-height: 1.6; font-weight: 600; margin-bottom: 20px; white-space: pre-line; }
 
-        /* Input Styles */
+        /* Input/Option Styling (Non-White) */
         input[type="text"], input[type="email"], input[type="tel"] { 
-            width: 100%; padding: 12px; border: 2px solid #cbd5e0; border-radius: 8px; 
-            background-color: var(--input-field-bg); font-size: 16px; box-sizing: border-box;
+            width: 100%; padding: 14px; border: 2px solid #cbd5e0; border-radius: 8px; 
+            background-color: var(--input-field-bg); font-size: 16px; box-sizing: border-box; margin-top: 5px;
         }
 
         .options label { 
-            display: flex; align-items: center; padding: 14px; border-radius: 10px; 
-            margin-bottom: 10px; cursor: pointer; transition: 0.2s; 
-            background: var(--option-bg); border: 1px solid #e2e8f0; font-size: 15px;
+            display: flex; align-items: center; padding: 15px; border-radius: 10px; 
+            margin-bottom: 12px; cursor: pointer; transition: 0.2s; 
+            background: var(--option-bg); border: 1px solid #e2e8f0;
         }
         .options label:hover { background: #e2e8f0; }
-        .options input { margin-right: 12px; transform: scale(1.2); }
+        .options input { margin-right: 12px; transform: scale(1.3); accent-color: var(--primary); }
 
-        /* Grid - Mobile Optimized */
-        .question-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(45px, 1fr)); gap: 8px; }
-        .grid-item { padding: 10px 0; border: 1px solid #cbd5e0; border-radius: 8px; text-align: center; cursor: pointer; font-weight: 700; background: #fff; font-size: 13px; }
+        /* Question Palette Grid */
+        .question-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(42px, 1fr)); gap: 8px; }
+        .grid-item { 
+            padding: 10px 0; border: 1px solid #cbd5e0; border-radius: 6px; 
+            text-align: center; cursor: pointer; font-weight: 700; background: #fff; font-size: 13px;
+        }
         .grid-item.active-idx { background: var(--primary); color: white; border-color: var(--primary); }
         .grid-item.answered { background: var(--success); color: white; border-color: var(--success); }
 
-        .btn { padding: 14px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: 'Poppins'; font-size: 15px; }
+        .btn { padding: 16px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-family: var(--font-heading); }
         .btn-primary { background: var(--primary); color: white; width: 100%; }
         .btn-submit { background: var(--success); color: white; display: none; width: 100%; }
 
         .question-wrapper { display: none; }
-        .question-wrapper.active { display: block; }
+        .question-wrapper.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
 <div id="lockOverlay">
-    <h2>SECURITY ALERT</h2>
-    <p>Please return to Full-Screen to continue.</p>
-    <button onclick="forceFullscreen()" class="btn btn-primary" style="width: auto; padding: 12px 30px;">Resume</button>
+    <h2>ENVIRONMENT LOCKED</h2>
+    <p>Please return to Full-Screen to continue the test.</p>
+    <button onclick="forceFullscreen()" class="btn btn-primary" style="width: auto; padding: 12px 30px;">Resume Exam</button>
 </div>
 
 <div class="container">
-    <header><h1>Wipro Elite NTH Assessment</h1></header>
+    <header><h1>Wipro Elite NTH Digital Assessment</h1></header>
 
-    <div id="registrationArea">
-        <h3 style="margin-bottom: 15px;">Candidate Registration</h3>
+    <div id="registrationArea" style="display: block;">
+        <h3>Candidate Registration</h3>
         <form id="regForm">
-            <div style="margin-bottom: 15px;"><label>FULL NAME</label><input type="text" required id="name"></div>
-            <div style="margin-bottom: 15px;"><label>EMAIL ID</label><input type="email" required id="email"></div>
-            <div style="margin-bottom: 15px;"><label>MOBILE</label><input type="tel" required pattern="[0-9]{10}" id="mobile"></div>
-            <button type="submit" class="btn btn-primary">Start Examination</button>
+            <div class="form-group"><label>Full Name</label><input type="text" required id="name"></div>
+            <div class="form-group"><label>Email ID</label><input type="email" required id="email"></div>
+            <div class="form-group"><label>Mobile Number</label><input type="tel" required pattern="[0-9]{10}" id="mobile"></div>
+            <div class="form-group"><label>Branch</label><input type="text" required id="branch"></div>
+            <div class="form-group"><label>Preliminary Score (%)</label><input type="number" required id="preScore"></div>
+            <button type="submit" class="btn btn-primary">Proceed</button>
         </form>
     </div>
 
+    <div id="instructionArea">
+        <h3 style="color: var(--danger);">Exam Rules (10 Points)</h3>
+        <ul style="line-height: 1.8;">
+            <li>45 Minutes total duration.</li>
+            <li>35 Questions (Quant, Logical, English, Technical).</li>
+            <li>No Back Button: You cannot revisit previous questions.</li>
+            <li>Full-screen mode is mandatory.</li>
+            <li>Tab switching will be flagged as malpractice.</li>
+            <li>Do not refresh the page.</li>
+            <li>Submit button appears only on the 35th question.</li>
+            <li>Select an answer to enable the 'Next' button.</li>
+            <li>Ensure stable internet connectivity.</li>
+            <li>Result will be processed post-submission.</li>
+        </ul>
+        <button onclick="startExam()" class="btn btn-primary">Start Exam</button>
+    </div>
+
+
     <div id="examArea" class="exam-layout">
         <div class="main-exam-area">
-            <div class="timer-strip">⏱ <span id="timer">45:00</span></div>
+            <div class="timer-strip">Session Time: <span id="timer">45:00</span></div>
             <form id="assessmentForm">
                 <div id="questionContainer"></div>
-                <div style="margin-top: 25px; display: flex; gap: 10px;">
+                <div style="margin-top: 30px; display: flex; gap: 15px;">
                     <button type="button" id="nextBtn" class="btn btn-primary" onclick="nextQuestion()">Save & Next</button>
                     <button type="submit" id="submitBtn" class="btn btn-submit">Final Submit</button>
                 </div>
@@ -113,48 +151,67 @@
         </div>
 
         <div class="sidebar">
-            <h4 style="margin: 0 0 15px 0; font-size: 13px; color: #64748b;">QUESTION PALETTE</h4>
+            <h4 style="margin: 0 0 15px 0; font-size: 13px; color: #64748b;">QUESTION NAVIGATOR</h4>
             <div class="question-grid" id="qGrid"></div>
+            <div style="margin-top: 20px; font-size: 11px;">
+                <p>● Green: Answered | ● Blue: Current</p>
+            </div>
         </div>
     </div>
 
-    <div id="successArea" style="display: none; text-align: center; padding: 30px;">
-        <h1 style="color: var(--success);">Done!</h1>
-        <p>Your responses have been recorded successfully.</p>
+    <div id="successArea" style="display: none; text-align: center; padding: 50px;">
+        <h1 style="color: var(--success);">Submission Successful</h1>
+        <p>Your results have been logged and sent to Wipro Recruitment.</p>
     </div>
 </div>
 
 <script>
     const questions = [
-        // TOUGH APTITUDE
-        { q: "A vessel contains 60 liters of milk. 12 liters are taken out and replaced with water. This process is repeated once more. How much milk is now left?", o: ["38.4 liters", "40 liters", "36 liters", "42.8 liters"], s: "Quant" },
-        { q: "A is thrice as efficient as B and is therefore able to finish a piece of work in 60 days less than B. Find time if they work together.", o: ["22.5 days", "25 days", "30 days", "20 days"], s: "Quant" },
-        { q: "Find the units digit in the expansion of $7^{105} + 3^{58}$.", o: ["6", "4", "2", "0"], s: "Quant" },
-        { q: "Pipe A and B fill in 20 and 30 hrs. Pipe C empties at 45 L/min. Together they fill in 15 hrs. Find tank capacity.", o: ["162,000 L", "150,000 L", "180,000 L", "120,000 L"], s: "Quant" },
+        // 1-7: TOUGH QUANT
+        { q: "A vessel contains 60 liters of milk. 12 liters are taken out and replaced with water. This process is repeated once more. How much milk is left?", o: ["38.4 liters", "40 liters", "36 liters", "42.8 liters"], s: "Quant" },
+        { q: "A is thrice as efficient as B and finishes work in 60 days less than B. Find time if they work together.", o: ["22.5 days", "25 days", "30 days", "20 days"], s: "Quant" },
+        { q: "Find the units digit in the expansion of 7^105 + 3^58.", o: ["6", "4", "2", "0"], s: "Quant" },
+        { q: "Two pipes A and B fill in 20 and 30 hrs. C empties at 45 L/min. Together they fill in 15 hrs. Find tank capacity.", o: ["162,000 L", "150,000 L", "180,000 L", "120,000 L"], s: "Quant" },
         { q: "A sum amounts to thrice itself in 3 years at CI. In how many years will it be 9 times itself?", o: ["6 years", "9 years", "12 years", "15 years"], s: "Quant" },
-        { q: "Average weight of 8 men increases by 2.5 kg when a new man replaces one weighing 65 kg. Weight of new man?", o: ["85 kg", "75 kg", "80 kg", "90 kg"], s: "Quant" },
+        { q: "Average weight of 8 men increases by 2.5 kg when a new man replaces one weighing 65 kg. New man's weight?", o: ["85 kg", "75 kg", "80 kg", "90 kg"], s: "Quant" },
         { q: "Two dice are thrown. What is the probability that the sum is a prime number?", o: ["5/12", "7/12", "1/2", "1/3"], s: "Quant" },
 
-        // TOUGH PYTHON/JAVA
-        { q: "In Python, output of:\ndef f(a, b=[]):\n  b.append(a)\n  return b\nprint(f(1), f(2))", o: ["[1, 2] [1, 2]", "[1] [2]", "[1] [1, 2]", "Error"], s: "Python" },
-        { q: "Which concept in Java prevents inheritance but allows instantiation?", o: ["Final class", "Abstract class", "Private constructor", "Static class"], s: "Java" },
-        { q: "What is true about Python's 'GIL'?", o: ["One thread executes bytecode at a time", "Allows multi-core CPU speed", "Exists in all Python versions", "None"], s: "Python" },
+        // 8-14: TOUGH PYTHON & JAVA
+        { q: "Python output:\ndef f(a, b=[]):\n  b.append(a)\n  return b\nprint(f(1), f(2))", o: [" [1, 2] [1, 2]", "[1] [2]", "[1] [1, 2]", "Error"], s: "Python" },
+        { q: "Which Java concept prevents inheritance while allowing instantiation?", o: ["Final class", "Abstract class", "Private constructor", "Static class"], s: "Java" },
+        { q: "True statement about Python's 'Global Interpreter Lock' (GIL):", o: ["Only one thread executes bytecode at once", "Enables multi-core speed", "Only in PyPy", "None"], s: "Python" },
         { q: "Java: If both 'try' and 'finally' have 'return' statements:", o: ["Finally block return wins", "Try block return wins", "Compilation fails", "Runtime error"], s: "Java" },
-        { q: "Purpose of '__slots__' in Python?", o: ["Memory optimization/Restricting attributes", "Allowing private vars", "Speeding up loops", "Inheritance"], s: "Python" },
+        { q: "Purpose of '__slots__' in Python?", o: ["Restrict attributes to save memory", "Allow private vars", "Speeding up loops", "Inheritance"], s: "Python" },
         { q: "What is 'Method Hiding' in Java?", o: ["Static method shadowing", "Instance overriding", "Encapsulation", "Hiding vars"], s: "Java" },
         { q: "Python 'nonlocal' keyword purpose:", o: ["Modify var in nearest non-global scope", "Declare global", "Create static var", "Private access"], s: "Python" },
-        
-        // MIXED & LOGICAL (Placeholders for 35 total)
-        { q: "COMPUTER is RFUVQNPC. MEDICINE is?", o: ["EOJDEJFM", "EOJDJEFM", "MFEJDJOE", "EDJDMFEJ"], s: "Logical" },
-        { q: "If x:y = 3:4 and y:z = 8:9, find x:z.", o: ["2:3", "3:2", "1:2", "4:5"], s: "Quant" },
-        { q: "LIFO Data Structure:", o: ["Stack", "Queue", "Tree", "Array"], s: "Mix" },
-        { q: "Binary of Decimal 10:", o: ["1010", "1100", "1001", "1011"], s: "Mix" }
-    ];
 
-    // Filling remaining to 35 for logic
-    while(questions.length < 35) {
-        questions.push({ q: "Sample Question " + (questions.length + 1) + ": Standard Wipro NTH Pattern.", o: ["Option A", "Option B", "Option C", "Option D"], s: "General" });
-    }
+        // 15-21: LOGICAL REASONING
+        { q: "If MONKEY is coded as XDJMNL, how is TIGER coded?", o: ["QDFHS", "SDFHS", "QDFGR", "RDFSJ"], s: "Logical" },
+        { q: "A man walks 5km North, turns Right and walks 3km, then turns Right and walks 5km. How far is he from start?", o: ["3 km", "5 km", "8 km", "0 km"], s: "Logical" },
+        { q: "Syllogism: All Pens are Cups. All Cups are Caps.", o: ["All Pens are Caps", "All Caps are Pens", "Some Caps are not Pens", "None"], s: "Logical" },
+        { q: "Next term: 2, 6, 12, 20, 30, ?", o: ["42", "40", "44", "48"], s: "Logical" },
+        { q: "Pointing to a lady, a man said 'Her daughter is the only granddaughter of my mother'. Relation?", o: ["Wife", "Sister", "Cousin", "Mother"], s: "Logical" },
+        { q: "Find odd one: 121, 144, 169, 186, 225", o: ["186", "144", "169", "225"], s: "Logical" },
+        { q: "If A+B means A is son of B, A-B means A is wife of B. What is P+R-Q?", o: ["Q is father of P", "Q is son of P", "Q is uncle of P", "None"], s: "Logical" },
+
+        // 22-28: VERBAL ABILITY
+        { q: "Synonym of 'PINNACLE':", o: ["Peak", "Base", "Valley", "Middle"], s: "Verbal" },
+        { q: "Antonym of 'ARCHAIC':", o: ["Modern", "Ancient", "Old", "Fresh"], s: "Verbal" },
+        { q: "Choose correct: 'Neither the teacher nor the students ____ present.'", o: ["were", "was", "is", "has"], s: "Verbal" },
+        { q: "Fill: He is proficient ___ Java and Python.", o: ["in", "at", "with", "for"], s: "Verbal" },
+        { q: "Complete: 'If I had studied harder, I ____ the exam.'", o: ["would have passed", "will pass", "would pass", "passed"], s: "Verbal" },
+        { q: "Meaning of 'Burn the midnight oil':", o: ["Work late into night", "Waste energy", "Cook late", "Ignore sleep"], s: "Verbal" },
+        { q: "Passive: 'The manager signed the documents.'", o: ["Documents were signed by manager", "Documents signed by manager", "Manager was signed", "None"], s: "Verbal" },
+
+        // 29-35: TECHNICAL/CORE CS
+        { q: "Which ACID property ensures data remains even after system failure?", o: ["Durability", "Atomicity", "Consistency", "Isolation"], s: "CS" },
+        { q: "OS: Excessive swapping of pages is called:", o: ["Thrashing", "Paging", "Segmentation", "Caching"], s: "CS" },
+        { q: "IP Address Range for Class C:", o: ["192-223", "128-191", "1-126", "224-239"], s: "CS" },
+        { q: "Worst-case complexity of Heap Sort:", o: ["O(n log n)", "O(n^2)", "O(n)", "O(log n)"], s: "CS" },
+        { q: "SDLC: Model allowing customer feedback at every stage:", o: ["Agile", "Waterfall", "V-Model", "Spiral"], s: "CS" },
+        { q: "C: What is 'int *p;'?", o: ["Pointer to an integer", "Integer variable", "Address of pointer", "None"], s: "CS" },
+        { q: "SQL: Command to remove all rows without removing structure:", o: ["TRUNCATE", "DROP", "DELETE", "REMOVE"], s: "CS" }
+    ];
 
     let current = 0;
     const container = document.getElementById('questionContainer');
@@ -164,7 +221,7 @@
         const wrapper = document.createElement('div');
         wrapper.className = `question-wrapper ${i === 0 ? 'active' : ''}`;
         wrapper.id = `q-wrapper-${i}`;
-        wrapper.innerHTML = `<span class="q-meta">${item.s}</span><p class="q-text">${item.q}</p>
+        wrapper.innerHTML = `<span class="q-meta">${item.s} Section</span><p class="q-text">${item.q}</p>
             <div class="options">${item.o.map(opt => `<label><input type="radio" name="q${i}" onchange="markAnswered(${i})"><span>${opt}</span></label>`).join('')}</div>`;
         container.appendChild(wrapper);
 
@@ -181,7 +238,7 @@
         document.getElementById(`q-wrapper-${idx}`).classList.add('active');
         current = idx;
         updateUI();
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top for mobile
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function markAnswered(idx) { document.getElementById(`grid-item-${idx}`).classList.add('answered'); }
@@ -223,6 +280,12 @@
         if (!document.fullscreenElement && document.getElementById('examArea').style.display === 'flex') 
             document.getElementById('lockOverlay').style.display = 'flex';
     });
+
+    document.getElementById('assessmentForm').onsubmit = (e) => {
+        e.preventDefault();
+        document.getElementById('examArea').style.display = 'none';
+        document.getElementById('successArea').style.display = 'block';
+    };
 </script>
 </body>
 </html>
