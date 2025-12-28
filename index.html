@@ -3,46 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wipro Elite Technical Assessment 2025</title>
-    
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
+    <title>Wipro Technical Assessment Portal</title>
     <style>
-        :root { --primary: #0056b3; --success: #28a745; --danger: #dc3545; --bg: #f4f7f9; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg); margin: 0; user-select: none; }
+        :root { --primary: #007bff; --success: #28a745; --danger: #dc3545; --dark: #343a40; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; user-select: none; }
         
         /* Fullscreen Lock Overlay */
-        #lockOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; color: white; text-align: center; justify-content: center; align-items: center; flex-direction: column; }
+        #lockOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 10000; color: white; text-align: center; justify-content: center; align-items: center; flex-direction: column; }
 
-        .container { max-width: 850px; margin: 30px auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); min-height: 550px; display: flex; flex-direction: column; position: relative; }
-        
-        header { text-align: center; border-bottom: 2px solid #eee; margin-bottom: 25px; padding-bottom: 15px; }
-        header h1 { color: var(--primary); font-size: 24px; margin: 0; }
+        .container { max-width: 850px; margin: 40px auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); min-height: 550px; display: flex; flex-direction: column; position: relative; }
+        header { text-align: center; border-bottom: 2px solid #e9ecef; margin-bottom: 30px; padding-bottom: 20px; }
+        header h1 { color: var(--dark); font-size: 26px; margin: 0; letter-spacing: 0.5px; }
 
-        .timer-strip { background: #fff5f5; border: 1px solid #feb2b2; color: #c53030; padding: 12px; border-radius: 8px; text-align: center; font-size: 1.3em; font-weight: bold; margin-bottom: 25px; position: sticky; top: 0; z-index: 100; }
+        .timer-strip { background: #fff5f5; border: 1px solid #feb2b2; color: #c53030; padding: 12px; border-radius: 8px; text-align: center; font-size: 1.4em; font-weight: 800; margin-bottom: 25px; position: sticky; top: 0; z-index: 100; }
 
-        /* Pagination */
-        .question-wrapper { display: none; flex-grow: 1; animation: fadeIn 0.4s ease; }
+        /* Question Navigation */
+        .question-wrapper { display: none; flex-grow: 1; animation: slideIn 0.3s ease-out; }
         .question-wrapper.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .q-meta { color: #666; font-size: 0.9em; font-weight: bold; margin-bottom: 10px; display: block; }
-        .q-text { font-size: 1.2em; line-height: 1.6; color: #333; margin-bottom: 25px; font-weight: 500; }
+        .q-meta { color: #6c757d; font-size: 0.95em; font-weight: 600; margin-bottom: 15px; display: block; text-transform: uppercase; }
+        .q-text { font-size: 1.25em; line-height: 1.6; color: #212529; margin-bottom: 30px; font-weight: 500; }
 
-        .options label { display: block; padding: 15px; border: 1px solid #cbd5e0; border-radius: 8px; margin-bottom: 12px; cursor: pointer; transition: 0.2s; }
-        .options label:hover { background: #f0f7ff; border-color: var(--primary); }
-        .options input { margin-right: 15px; transform: scale(1.2); }
+        .options label { display: block; padding: 18px; border: 2px solid #e9ecef; border-radius: 10px; margin-bottom: 15px; cursor: pointer; transition: all 0.2s ease; }
+        .options label:hover { background: #f8fbff; border-color: var(--primary); }
+        .options input { margin-right: 15px; transform: scale(1.3); vertical-align: middle; }
 
         /* Buttons */
-        .btn-box { margin-top: auto; padding-top: 30px; }
-        .btn { padding: 15px; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; }
+        .btn-box { margin-top: 30px; padding-top: 20px; border-top: 1px solid #e9ecef; }
+        .btn { padding: 15px; border: none; border-radius: 8px; font-size: 18px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.3s; }
         .btn-primary { background: var(--primary); color: white; }
         .btn-submit { background: var(--success); color: white; display: none; }
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn:hover { filter: brightness(90%); }
 
-        /* Forms */
-        input[type="text"], input[type="email"], input[type="number"], input[type="tel"] { width: 100%; padding: 12px; margin: 8px 0 20px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        /* Registration Form */
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #495057; }
+        input[type="text"], input[type="email"], input[type="number"], input[type="tel"] { width: 100%; padding: 14px; border: 2px solid #dee2e6; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
 
         #registrationArea, #instructionArea, #examArea { display: none; }
     </style>
@@ -50,51 +47,51 @@
 <body oncontextmenu="return false;">
 
 <div id="lockOverlay">
-    <h1>Fullscreen Required</h1>
-    <p>You have exited the secure exam environment.</p>
-    <button onclick="reEnterFull()" class="btn btn-primary" style="width: 250px;">Return to Exam</button>
+    <h1 style="font-size: 40px;">SECURE ENVIRONMENT LOCKED</h1>
+    <p style="font-size: 18px; margin-bottom: 30px;">You have exited the assessment window. Full-screen mode is required to continue.</p>
+    <button onclick="forceFullscreen()" class="btn btn-primary" style="width: 300px;">Resume Assessment</button>
 </div>
 
 <div class="container">
-    <header><h1>Wipro Elite Technical Assessment</h1></header>
+    <header><h1>Wipro Technical Assessment</h1></header>
 
     <div id="registrationArea" style="display: block;">
         <h3>Candidate Registration</h3>
         <form id="regForm">
-            <label>Full Name</label><input type="text" id="rName" required>
-            <label>Email ID</label><input type="email" id="rEmail" required>
-            <label>Mobile Number</label><input type="tel" id="rMob" required>
-            <label>Branch/Specialization</label><input type="text" id="rBranch" required>
-            <label>Preliminary Score (%)</label><input type="number" id="rScore" min="0" max="100" required>
-            <button type="submit" class="btn btn-primary">Proceed to Instructions</button>
+            <div class="form-group"><label>Full Name</label><input type="text" id="name" required placeholder="Enter your full name"></div>
+            <div class="form-group"><label>Official Email ID</label><input type="email" id="email" required placeholder="email@example.com"></div>
+            <div class="form-group"><label>10-Digit Mobile Number</label><input type="tel" id="mobile" pattern="[0-9]{10}" required placeholder="e.g. 9876543210"></div>
+            <div class="form-group"><label>Branch/Specialization</label><input type="text" id="branch" required placeholder="e.g. CSE, ECE"></div>
+            <div class="form-group"><label>Preliminary Score (%)</label><input type="number" id="preScore" min="0" max="100" required placeholder="Enter percentage"></div>
+            <button type="submit" class="btn btn-primary">Register for Exam</button>
         </form>
     </div>
 
     <div id="instructionArea">
-        <h3 style="color: var(--danger);">Standard Examination Instructions</h3>
-        <ul style="line-height: 1.8; color: #444;">
-            <li><strong>1. Duration:</strong> 45 minutes for 35 questions.</li>
-            <li><strong>2. Navigation:</strong> Single-question view. You cannot return to previous questions.</li>
-            <li><strong>3. Full Screen:</strong> The system locks your browser. Do not press 'ESC'.</li>
-            <li><strong>4. Monitoring:</strong> Any attempt to switch tabs will be flagged.</li>
-            <li><strong>5. Math Notation:</strong> All formulas are rendered in clean LaTeX format.</li>
-            <li><strong>6. Scoring:</strong> +1 for correct, 0 for incorrect. No negative marking.</li>
-            <li><strong>7. Auto-Submit:</strong> System submits automatically when timer hits 00:00.</li>
-            <li><strong>8. Required:</strong> You must select an answer before clicking 'Next'.</li>
-            <li><strong>9. Submission:</strong> Final submit is only available on Question 35.</li>
-            <li><strong>10. Connectivity:</strong> Ensure your internet is stable.</li>
-        </ul>
-        <button onclick="startExam()" class="btn btn-primary" style="background:#6f42c1">Start Assessment</button>
+        <h3 style="color: var(--danger);">10 Mandatory Exam Rules</h3>
+        <ol style="line-height: 2; color: #444; margin-bottom: 30px;">
+            <li><strong>Duration:</strong> 45 minutes total for 35 Multiple Choice Questions.</li>
+            <li><strong>Single View:</strong> One question is shown per screen. You cannot go back.</li>
+            <li><strong>Full Screen:</strong> The system locks your browser. Do not press ESC or exit.</li>
+            <li><strong>Tab Switching:</strong> Switching tabs or minimizing the window will block the exam.</li>
+            <li><strong>No Refresh:</strong> Do not refresh the page; your progress will be lost.</li>
+            <li><strong>Selection:</strong> You must select an option before moving to the Next question.</li>
+            <li><strong>No Negative Marking:</strong> Every correct answer gets 1 point.</li>
+            <li><strong>Calculations:</strong> Use a separate sheet of paper if necessary.</li>
+            <li><strong>Auto-Submit:</strong> The test will submit automatically when the timer reaches 00:00.</li>
+            <li><strong>Submission:</strong> The 'Final Submit' button only appears on Question 35.</li>
+        </ol>
+        <button onclick="startFinalExam()" class="btn btn-primary" style="background: #6f42c1;">Agree & Start Assessment</button>
     </div>
 
     <div id="examArea">
         <div class="timer-strip">Time Remaining: <span id="timer">45:00</span></div>
-        <form id="mainExamForm">
+        <form id="assessmentForm">
             
             <div id="qContainer">
                 <div class="question-wrapper active">
-                    <span class="q-meta">Aptitude | Q1 of 35</span>
-                    <p class="q-text">A number divided by 7 leaves remainder 3. When divided by 21 it leaves remainder:</p>
+                    <span class="q-meta">Aptitude | Question 1 of 35</span>
+                    <p class="q-text">A number divided by 7 leaves remainder 3. When the same number is divided by 21, what is the remainder?</p>
                     <div class="options">
                         <label><input type="radio" name="q1" value="A"> A) 3</label>
                         <label><input type="radio" name="q1" value="B"> B) 10</label>
@@ -104,8 +101,8 @@
                 </div>
 
                 <div class="question-wrapper">
-                    <span class="q-meta">Aptitude | Q2 of 35</span>
-                    <p class="q-text">Find $x$ if: $2^x \times 4^y = 512$ and $x + y = 6$.</p>
+                    <span class="q-meta">Aptitude | Question 2 of 35</span>
+                    <p class="q-text">Find the value of x if: 2<sup>x</sup> × 4<sup>y</sup> = 512 and x + y = 6.</p>
                     <div class="options">
                         <label><input type="radio" name="q2" value="A"> A) 2</label>
                         <label><input type="radio" name="q2" value="B"> B) 3</label>
@@ -115,8 +112,8 @@
                 </div>
 
                 <div class="question-wrapper">
-                    <span class="q-meta">Aptitude | Q3 of 35</span>
-                    <p class="q-text">What is the sum of $n$ natural numbers if the result is 465?</p>
+                    <span class="q-meta">Aptitude | Question 3 of 35</span>
+                    <p class="q-text">The sum of the first n natural numbers is 465. What is the value of n?</p>
                     <div class="options">
                         <label><input type="radio" name="q3" value="A"> A) 30</label>
                         <label><input type="radio" name="q3" value="B"> B) 31</label>
@@ -126,134 +123,77 @@
                 </div>
 
                 <div class="question-wrapper">
-                    <span class="q-meta">Aptitude | Q4 of 35</span>
-                    <p class="q-text">The value of $\log_{10} 125 + \log_{10} 8$ is:</p>
-                    <div class="options">
-                        <label><input type="radio" name="q4" value="A"> A) 2</label>
-                        <label><input type="radio" name="q4" value="B"> B) 3</label>
-                        <label><input type="radio" name="q4" value="C"> C) 1000</label>
-                        <label><input type="radio" name="q4" value="D) None of these"> D) None</label>
-                    </div>
-                </div>
-
-                <div class="question-wrapper">
-                    <span class="q-meta">Aptitude | Q5 of 35</span>
-                    <p class="q-text">A train 150m long passes a pole in 15 seconds. Its speed in km/h is:</p>
-                    <div class="options">
-                        <label><input type="radio" name="q5" value="A"> A) 36</label>
-                        <label><input type="radio" name="q5" value="B"> B) 45</label>
-                        <label><input type="radio" name="q5" value="C"> C) 50</label>
-                        <label><input type="radio" name="q5" value="D"> D) 54</label>
-                    </div>
-                </div>
-
-                <div class="question-wrapper">
-                    <span class="q-meta">Logical | Q6 of 35</span>
+                    <span class="q-meta">Logical | Question 6 of 35</span>
                     <p class="q-text">Complete the series: 3, 10, 24, 52, 108, ___</p>
                     <div class="options">
                         <label><input type="radio" name="q6" value="A"> A) 220</label>
-                        <label><input type="radio" name="q6" value="B"> B) 180</label>
+                        <label><input type="radio" name="q6" value="B"> B) 240</label>
                         <label><input type="radio" name="q6" value="C"> C) 210</label>
-                        <label><input type="radio" name="q6" value="D"> D) 240</label>
+                        <label><input type="radio" name="q6" value="D"> D) 180</label>
                     </div>
                 </div>
 
-                <div class="question-wrapper">
-                    <span class="q-meta">Logical | Q7 of 35</span>
-                    <p class="q-text">If 'PEN' is coded as 35, what is the code for 'BOOK'?</p>
+                <div class="question-wrapper" id="lastQ">
+                    <span class="q-meta">Technical | Question 35 of 35</span>
+                    <p class="q-text">Which of the following concepts in OOP allows one class to inherit the properties of another?</p>
                     <div class="options">
-                        <label><input type="radio" name="q7" value="A"> A) 43</label>
-                        <label><input type="radio" name="q7" value="B"> B) 41</label>
-                        <label><input type="radio" name="q7" value="C"> C) 42</label>
-                        <label><input type="radio" name="q7" value="D"> D) 40</label>
-                    </div>
-                </div>
-
-                <div class="question-wrapper">
-                    <span class="q-meta">Verbal | Q8 of 35</span>
-                    <p class="q-text">Choose the synonym of 'CANDID':</p>
-                    <div class="options">
-                        <label><input type="radio" name="q8" value="A"> A) Secretive</label>
-                        <label><input type="radio" name="q8" value="B"> B) Honest</label>
-                        <label><input type="radio" name="q8" value="C"> C) Cunning</label>
-                    </div>
-                </div>
-
-                <div class="question-wrapper">
-                    <span class="q-meta">Technical | Q21 of 35</span>
-                    <p class="q-text">Which data structure uses the LIFO principle?</p>
-                    <div class="options">
-                        <label><input type="radio" name="q21" value="A"> A) Queue</label>
-                        <label><input type="radio" name="q21" value="B"> B) Stack</label>
-                        <label><input type="radio" name="q21" value="C"> C) LinkedList</label>
-                    </div>
-                </div>
-
-                <div class="question-wrapper" id="lastQuestion">
-                    <span class="q-meta">Technical | Q35 of 35</span>
-                    <p class="q-text">Which of the following is not a pillar of OOPS?</p>
-                    <div class="options">
-                        <label><input type="radio" name="q35" value="A"> A) Encapsulation</label>
-                        <label><input type="radio" name="q35" value="B"> B) Polymorphism</label>
-                        <label><input type="radio" name="q35" value="C"> C) Compilation</label>
+                        <label><input type="radio" name="q35" value="A"> A) Polymorphism</label>
+                        <label><input type="radio" name="q35" value="B"> B) Encapsulation</label>
+                        <label><input type="radio" name="q35" value="C"> C) Inheritance</label>
                         <label><input type="radio" name="q35" value="D"> D) Abstraction</label>
                     </div>
                 </div>
             </div>
 
             <div class="btn-box">
-                <button type="button" id="nextBtn" class="btn btn-primary" onclick="handleNext()">Next Question</button>
-                <button type="submit" id="finalSubmit" class="btn btn-submit">Submit Assessment</button>
+                <button type="button" id="nextBtn" class="btn btn-primary" onclick="nextQuestion()">Next Question</button>
+                <button type="submit" id="submitBtn" class="btn btn-submit">Final Submit Assessment</button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-    // Logic to generate missing questions for display purposes
-    const container = document.getElementById('qContainer');
-    const existingCount = container.children.length;
-    for(let i=existingCount+1; i<=34; i++){
-        let div = document.createElement('div');
-        div.className = "question-wrapper";
-        div.innerHTML = `
-            <span class="q-meta">Assessment | Q${i} of 35</span>
-            <p class="q-text">Select the most appropriate technical answer for question ${i}.</p>
+    // AUTOMATICALLY FILL REMAINING QUESTIONS (FOR DEMO)
+    const qContainer = document.getElementById('qContainer');
+    const existingWrappers = document.querySelectorAll('.question-wrapper');
+    const lastQ = document.getElementById('lastQ');
+
+    // Populate missing questions from 4 to 34
+    for (let i = 4; i <= 34; i++) {
+        if (i === 6) continue; // Skip already defined Q6
+        let qDiv = document.createElement('div');
+        qDiv.className = 'question-wrapper';
+        qDiv.innerHTML = `
+            <span class="q-meta">Assessment | Question ${i} of 35</span>
+            <p class="q-text">This is Technical Question ${i}: What is the primary purpose of Normalization in a Database?</p>
             <div class="options">
-                <label><input type="radio" name="q${i}" value="A"> A) Option A</label>
-                <label><input type="radio" name="q${i}" value="B"> B) Option B</label>
-                <label><input type="radio" name="q${i}" value="C"> C) Option C</label>
+                <label><input type="radio" name="q${i}" value="A"> A) Data Redundancy</label>
+                <label><input type="radio" name="q${i}" value="B"> B) Data Security</label>
+                <label><input type="radio" name="q${i}" value="C"> C) Data Encryption</label>
+                <label><input type="radio" name="q${i}" value="D"> D) Speed up queries</label>
             </div>`;
-        container.insertBefore(div, document.getElementById('lastQuestion'));
+        qContainer.insertBefore(qDiv, lastQ);
     }
 
     let currentStep = 1;
-    const totalQ = 35;
+    const totalQuestions = 35;
     const wrappers = document.querySelectorAll('.question-wrapper');
 
-    // REGISTRATION
+    // STEP 1 TO STEP 2
     document.getElementById('regForm').onsubmit = (e) => {
         e.preventDefault();
         document.getElementById('registrationArea').style.display = 'none';
         document.getElementById('instructionArea').style.display = 'block';
     };
 
-    // START EXAM
-    function startExam() {
-        enterFull();
-        document.getElementById('instructionArea').style.display = 'none';
-        document.getElementById('examArea').style.display = 'block';
-        startTimer();
-    }
-
-    // FULL SCREEN LOCK
-    function enterFull() {
-        const el = document.documentElement;
-        if (el.requestFullscreen) el.requestFullscreen();
+    // FULLSCREEN LOCKDOWN
+    function forceFullscreen() {
+        const doc = document.documentElement;
+        if (doc.requestFullscreen) doc.requestFullscreen();
+        else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
         document.getElementById('lockOverlay').style.display = 'none';
     }
-
-    function reEnterFull() { enterFull(); }
 
     document.addEventListener('fullscreenchange', () => {
         if (!document.fullscreenElement) {
@@ -261,24 +201,31 @@
         }
     });
 
+    // START EXAM
+    function startFinalExam() {
+        forceFullscreen();
+        document.getElementById('instructionArea').style.display = 'none';
+        document.getElementById('examArea').style.display = 'block';
+        startTimer();
+    }
+
     // NAVIGATION
-    function handleNext() {
-        const currentInputs = wrappers[currentStep-1].querySelectorAll('input:checked');
+    function nextQuestion() {
+        const currentInputs = wrappers[currentStep - 1].querySelectorAll('input:checked');
         if (currentInputs.length === 0) {
-            alert("Mandatory: Please select an answer.");
+            alert("Mandatory: Please select an answer before moving forward.");
             return;
         }
 
-        if (currentStep < totalQ) {
-            wrappers[currentStep-1].classList.remove('active');
+        if (currentStep < totalQuestions) {
+            wrappers[currentStep - 1].classList.remove('active');
             currentStep++;
-            wrappers[currentStep-1].classList.add('active');
-            
-            if (currentStep === totalQ) {
+            wrappers[currentStep - 1].classList.add('active');
+
+            if (currentStep === totalQuestions) {
                 document.getElementById('nextBtn').style.display = 'none';
-                document.getElementById('finalSubmit').style.display = 'block';
+                document.getElementById('submitBtn').style.display = 'block';
             }
-            MathJax.typeset(); // Refresh Math symbols
         }
     }
 
@@ -287,22 +234,23 @@
         let time = 45 * 60;
         const display = document.getElementById('timer');
         const interval = setInterval(() => {
-            let m = Math.floor(time/60);
-            let s = time%60;
-            display.textContent = `${m}:${s<10?'0':''}${s}`;
+            let m = Math.floor(time / 60);
+            let s = time % 60;
+            display.textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
             if (--time < 0) {
                 clearInterval(interval);
-                alert("Time up! Auto-submitting...");
-                document.getElementById('mainExamForm').submit();
+                alert("Time is up! Your assessment is being submitted automatically.");
+                document.getElementById('assessmentForm').submit();
             }
         }, 1000);
     }
 
-    document.getElementById('mainExamForm').onsubmit = (e) => {
+    document.getElementById('assessmentForm').onsubmit = (e) => {
         e.preventDefault();
-        alert("Assessment Submitted Successfully!");
+        alert("Success: Assessment submitted! Redirecting to home...");
         location.reload();
     };
 </script>
+
 </body>
 </html>
