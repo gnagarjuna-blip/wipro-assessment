@@ -6,172 +6,161 @@
     <title>Wipro Technical Assessment</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; transition: background-color 0.5s; }
-        .container { width: 95%; max-width: 800px; margin: 40px auto; padding: 30px; background-color: #fff; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); border-radius: 12px; }
+        /* Base Styles */
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #f0f2f5; color: #333; }
+        .container { width: 95%; max-width: 800px; margin: 40px auto; padding: 30px; background-color: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border-radius: 10px; transition: 0.3s; }
         
-        /* Fullscreen styles */
-        :fullscreen body { background-color: #fff; }
-        :fullscreen .container { width: 100%; max-width: 100%; height: 100vh; margin: 0; border-radius: 0; box-shadow: none; overflow-y: auto; }
+        /* Full-Screen Mode Overrides */
+        :fullscreen .container { width: 100vw; max-width: 100vw; height: 100vh; margin: 0; border-radius: 0; overflow-y: auto; padding: 50px; box-sizing: border-box; }
+        :-webkit-full-screen .container { width: 100vw; max-width: 100vw; height: 100vh; margin: 0; border-radius: 0; padding: 50px; }
 
-        header { text-align: center; padding-bottom: 15px; border-bottom: 3px solid #007bff; margin-bottom: 25px; }
-        .timer-box { background-color: #fff5f5; color: #d9534f; padding: 15px; border-radius: 8px; text-align: center; font-size: 1.5em; font-weight: bold; margin-bottom: 25px; border: 2px solid #f5c6cb; position: sticky; top: 0; z-index: 100; }
-        
-        .question-section { margin-bottom: 30px; padding: 20px; border: 1px solid #e1e4e8; border-radius: 8px; background-color: #ffffff; }
-        .question-section h2 { color: #007bff; margin-top: 0; }
-        
-        .question { margin-bottom: 20px; padding: 15px; border-bottom: 1px solid #eee; }
-        .option-group label { display: block; margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px; cursor: pointer; transition: 0.2s; }
-        .option-group label:hover { background: #e9ecef; }
+        /* Header Styling */
+        header { text-align: center; border-bottom: 3px solid #007bff; margin-bottom: 30px; padding-bottom: 15px; }
+        header h1 { margin: 0; font-size: 28px; color: #1a1a1a; }
+        header p { margin: 5px 0; color: #666; font-weight: 500; }
 
-        input[type="text"], input[type="tel"], input[type="email"] { width: 100%; padding: 12px; margin-top: 8px; border: 1px solid #ced4da; border-radius: 5px; box-sizing: border-box; }
+        /* Form & Section Styles */
+        .section-card { border: 1px solid #e1e4e8; border-radius: 8px; padding: 25px; margin-bottom: 20px; background: #fff; }
+        .section-card h2 { color: #007bff; font-size: 20px; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         
-        .btn { display: block; width: 100%; padding: 15px; border: none; border-radius: 6px; font-size: 1.1em; font-weight: bold; cursor: pointer; margin-top: 20px; color: white; transition: background 0.3s; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; color: #444; }
+        input[type="text"], input[type="email"], input[type="tel"] { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ced4da; border-radius: 6px; font-size: 16px; box-sizing: border-box; }
+        input:focus { border-color: #007bff; outline: none; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
+
+        /* Buttons */
+        .btn { display: block; width: 100%; padding: 15px; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; transition: background 0.2s; color: white; text-align: center; }
         .btn-reg { background-color: #007bff; }
         .btn-reg:hover { background-color: #0056b3; }
-        .btn-submit { background-color: #28a745; }
-        .btn-start { background-color: #6f42c1; display: none; }
+        .btn-start { background-color: #6f42c1; }
+        .btn-start:hover { background-color: #5a32a3; }
+        .btn-submit { background-color: #28a745; margin-top: 30px; }
 
-        #examArea { display: none; }
-        #registrationArea { display: block; }
-        #successMessage { display: none; text-align: center; padding: 20px; }
-        .warning { color: #856404; background-color: #fff3cd; padding: 10px; border-radius: 5px; margin: 10px 0; font-size: 0.9em; }
+        /* Exam Elements */
+        .timer-box { background: #fff5f5; border: 2px solid #feb2b2; color: #c53030; padding: 15px; border-radius: 8px; text-align: center; font-size: 26px; font-weight: 800; margin-bottom: 25px; position: sticky; top: 0; z-index: 100; }
+        .question { padding: 15px 0; border-bottom: 1px solid #f0f0f0; }
+        .options label { display: block; padding: 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 5px; margin: 8px 0; cursor: pointer; }
+        .options label:hover { background: #edf2f7; }
+
+        /* Area Management */
+        #registrationArea, #startArea, #examArea { display: none; }
+        #registrationArea { display: block; } /* Show registration first */
+
+        .info-text { text-align: center; color: #4a5568; line-height: 1.6; }
     </style>
 </head>
 <body>
 
-<div class="container" id="mainContainer">
+<div class="container" id="examWrapper">
     <header>
         <h1>Wipro Technical Assessment</h1>
         <p>Official Recruitment Portal</p>
     </header>
 
     <div id="registrationArea">
-        <div class="question-section">
+        <div class="section-card">
             <h2>Candidate Registration</h2>
             <form id="regForm">
-                <div class="question">
-                    <label>Full Name:</label>
-                    <input type="text" id="regName" placeholder="Enter your full name" required>
-                </div>
-                <div class="question">
-                    <label>Email ID:</label>
-                    <input type="email" id="regEmail" placeholder="Enter your official email" required>
-                </div>
-                <div class="question">
-                    <label>Mobile Number:</label>
-                    <input type="tel" id="regMobile" placeholder="Enter 10-digit mobile number" required>
-                </div>
+                <label for="regName">Full Name:</label>
+                <input type="text" id="regName" placeholder="Enter your full name" required>
+                
+                <label for="regEmail">Email ID:</label>
+                <input type="email" id="regEmail" placeholder="Enter your official email" required>
+                
+                <label for="regMobile">Mobile Number:</label>
+                <input type="tel" id="regMobile" placeholder="Enter 10-digit mobile number" required>
+                
                 <button type="submit" class="btn btn-reg">Register for Exam</button>
             </form>
         </div>
     </div>
 
-    <div id="successMessage">
-        <h2 style="color: #28a745;">Registration Successful!</h2>
-        <p>Your details have been recorded. You are now eligible to start the assessment.</p>
-        <div class="warning">
-            <strong>Note:</strong> Once you click start, the exam will enter <b>Full-Screen Mode</b>. 
-            Exiting full-screen or switching tabs may result in disqualification.
+    <div id="startArea">
+        <div class="section-card info-text">
+            <h2 style="color: #28a745; border: none;">Registration Confirmed</h2>
+            <p>You have successfully registered for the Wipro Technical Assessment.</p>
+            <blockquote>
+                <strong>Important:</strong> Clicking the button below will launch the exam in <b>Full-Screen Mode</b>. 
+                Leaving the full-screen window or switching tabs may lead to automatic submission.
+            </blockquote>
+            <button id="beginBtn" class="btn btn-start">Start Exam Now</button>
         </div>
-        <button id="startFullscreen" class="btn btn-start">Start Exam Now</button>
     </div>
 
     <div id="examArea">
         <div class="timer-box">Time Remaining: <span id="timer">45:00</span></div>
-        <form id="assessmentForm">
-            <div class="question-section">
-                <h2>Section A: Quantitative Aptitude</h2>
+        <form id="mainAssessment">
+            <div class="section-card">
+                <h2>Section 1: Technical & Quantitative</h2>
                 <div class="question">
-                    <p>1. A number is divided by 7 leaves remainder 3. When divided by 21 it leaves remainder:</p>
-                    <div class="option-group">
-                        <label><input type="radio" name="q1" value="A"> A) 1</label>
-                        <label><input type="radio" name="q1" value="B"> B) 2</label>
-                        <label><input type="radio" name="q1" value="C"> C) 3</label>
-                        <label><input type="radio" name="q1" value="D"> D) Cannot be determined</label>
+                    <p><strong>1.</strong> A number divided by 7 leaves a remainder of 3. What is the remainder when the same number is divided by 21?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="3"> 3</label>
+                        <label><input type="radio" name="q1" value="7"> 7</label>
+                        <label><input type="radio" name="q1" value="21"> 21</label>
+                        <label><input type="radio" name="q1" value="Unknown"> Cannot be determined</label>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-submit" id="submitButton">Final Submit</button>
+            <button type="submit" class="btn btn-submit">Submit Assessment</button>
         </form>
     </div>
 </div>
 
 <script>
-    // --- INITIALIZE EMAILJS ---
-    (function() {
-        emailjs.init("YOUR_PUBLIC_KEY"); // REPLACE THIS
-    })();
+    // Initialize EmailJS (Replace with your keys)
+    (function() { emailjs.init("YOUR_PUBLIC_KEY"); })();
 
     const regForm = document.getElementById('regForm');
     const registrationArea = document.getElementById('registrationArea');
-    const successMessage = document.getElementById('successMessage');
-    const startBtn = document.getElementById('startFullscreen');
+    const startArea = document.getElementById('startArea');
     const examArea = document.getElementById('examArea');
-    const mainContainer = document.getElementById('mainContainer');
+    const beginBtn = document.getElementById('beginBtn');
 
-    // 1. REGISTRATION LOGIC
+    // 1. Logic for Registration Submission
     regForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
-        const name = document.getElementById('regName').value;
-        const email = document.getElementById('regEmail').value;
-
-        // Simulate Email Sending (EmailJS)
-        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
-            to_name: name,
-            to_email: email,
-            message: "Your exam registration is confirmed."
-        }).then(() => {
-            registrationArea.style.display = 'none';
-            successMessage.style.display = 'block';
-            startBtn.style.display = 'block';
-        }).catch((err) => {
-            alert("Proceeding to exam (Email notification failed)");
-            registrationArea.style.display = 'none';
-            successMessage.style.display = 'block';
-            startBtn.style.display = 'block';
-        });
+        // Hide registration, show "Start Exam" screen
+        registrationArea.style.display = 'none';
+        startArea.style.display = 'block';
     });
 
-    // 2. FULL SCREEN & START EXAM
-    startBtn.addEventListener('click', () => {
-        enterFullScreen(document.documentElement); // Entire page goes full screen
-        successMessage.style.display = 'none';
+    // 2. Logic for Starting Exam & Full Screen
+    beginBtn.addEventListener('click', () => {
+        const docEl = document.documentElement;
+
+        // Trigger Full Screen
+        if (docEl.requestFullscreen) { docEl.requestFullscreen(); }
+        else if (docEl.mozRequestFullScreen) { docEl.mozRequestFullScreen(); }
+        else if (docEl.webkitRequestFullscreen) { docEl.webkitRequestFullscreen(); }
+        else if (docEl.msRequestFullscreen) { docEl.msRequestFullscreen(); }
+
+        // Switch to Exam Area
+        startArea.style.display = 'none';
         examArea.style.display = 'block';
-        startTimer();
+
+        // Start Timer
+        runTimer();
     });
 
-    function enterFullScreen(element) {
-        if (element.requestFullscreen) {
-            element.requestFullscreen();
-        } else if (element.mozRequestFullScreen) { // Firefox
-            element.mozRequestFullScreen();
-        } else if (element.webkitRequestFullscreen) { // Chrome, Safari, Opera
-            element.webkitRequestFullscreen();
-        } else if (element.msRequestFullscreen) { // IE/Edge
-            element.msRequestFullscreen();
-        }
-    }
-
-    // 3. TIMER LOGIC
-    let timeRemaining = 45 * 60;
-    function startTimer() {
-        const timerDisplay = document.getElementById('timer');
-        const interval = setInterval(() => {
-            let mins = Math.floor(timeRemaining / 60);
-            let secs = timeRemaining % 60;
-            timerDisplay.textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    // 3. Exam Timer Logic
+    let timeLeft = 45 * 60; 
+    function runTimer() {
+        const display = document.getElementById('timer');
+        const countdown = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            display.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
             
-            if (timeRemaining <= 0) {
-                clearInterval(interval);
-                alert("Time is up! Your responses are being submitted.");
-                document.getElementById('assessmentForm').submit();
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                alert("Assessment time has expired. Submitting your answers.");
+                document.getElementById('mainAssessment').submit();
             }
-            timeRemaining--;
+            timeLeft--;
         }, 1000);
     }
 
-    // Prevent right-click to add basic security
+    // Basic anti-cheat: Prevent right-click
     document.addEventListener('contextmenu', event => event.preventDefault());
 </script>
 
