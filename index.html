@@ -4,164 +4,300 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wipro Technical Assessment</title>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
-        /* Base Styles */
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #f0f2f5; color: #333; }
-        .container { width: 95%; max-width: 800px; margin: 40px auto; padding: 30px; background-color: #fff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border-radius: 10px; transition: 0.3s; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; }
+        .container { width: 95%; max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px; }
         
-        /* Full-Screen Mode Overrides */
-        :fullscreen .container { width: 100vw; max-width: 100vw; height: 100vh; margin: 0; border-radius: 0; overflow-y: auto; padding: 50px; box-sizing: border-box; }
-        :-webkit-full-screen .container { width: 100vw; max-width: 100vw; height: 100vh; margin: 0; border-radius: 0; padding: 50px; }
+        /* Fullscreen-specific styling */
+        :fullscreen .container { width: 100%; max-width: 100%; height: 100vh; margin: 0; border-radius: 0; overflow-y: auto; padding: 40px; }
+        :-webkit-full-screen .container { width: 100%; max-width: 100%; height: 100vh; margin: 0; border-radius: 0; padding: 40px; }
 
-        /* Header Styling */
-        header { text-align: center; border-bottom: 3px solid #007bff; margin-bottom: 30px; padding-bottom: 15px; }
-        header h1 { margin: 0; font-size: 28px; color: #1a1a1a; }
-        header p { margin: 5px 0; color: #666; font-weight: 500; }
-
-        /* Form & Section Styles */
-        .section-card { border: 1px solid #e1e4e8; border-radius: 8px; padding: 25px; margin-bottom: 20px; background: #fff; }
-        .section-card h2 { color: #007bff; font-size: 20px; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        header { text-align: center; padding-bottom: 10px; border-bottom: 2px solid #007bff; margin-bottom: 20px; }
+        header h1 { color: #333; margin: 0; }
         
-        label { display: block; font-weight: 600; margin-bottom: 8px; color: #444; }
-        input[type="text"], input[type="email"], input[type="tel"] { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ced4da; border-radius: 6px; font-size: 16px; box-sizing: border-box; }
-        input:focus { border-color: #007bff; outline: none; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
-
-        /* Buttons */
-        .btn { display: block; width: 100%; padding: 15px; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; transition: background 0.2s; color: white; text-align: center; }
+        .timer-box { background-color: #ffdddd; color: #d9534f; padding: 15px; border-radius: 5px; text-align: center; font-size: 1.4em; font-weight: bold; margin-bottom: 25px; border: 1px solid #d9534f; position: sticky; top: 10px; z-index: 100; }
+        
+        .question-section { margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 6px; background-color: #fafafa; }
+        .question-section h2 { border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-top: 0; color: #007bff; }
+        
+        .question { margin-bottom: 20px; padding: 10px; border-bottom: 1px dashed #eee; }
+        .question p { font-weight: bold; margin-bottom: 8px; font-size: 1.05em; }
+        
+        .option-group label { display: block; margin-bottom: 5px; padding: 8px; border-radius: 4px; cursor: pointer; }
+        .option-group label:hover { background-color: #e9f5ff; }
+        
+        input[type="text"], input[type="tel"], input[type="email"], input[type="number"] { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
+        
+        .btn { display: block; width: 100%; padding: 15px; color: white; border: none; border-radius: 5px; font-size: 1.2em; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; }
         .btn-reg { background-color: #007bff; }
-        .btn-reg:hover { background-color: #0056b3; }
         .btn-start { background-color: #6f42c1; }
-        .btn-start:hover { background-color: #5a32a3; }
-        .btn-submit { background-color: #28a745; margin-top: 30px; }
+        .btn-submit { background-color: #28a745; }
+        .btn:disabled { background-color: #6c757d; cursor: not-allowed; }
 
-        /* Exam Elements */
-        .timer-box { background: #fff5f5; border: 2px solid #feb2b2; color: #c53030; padding: 15px; border-radius: 8px; text-align: center; font-size: 26px; font-weight: 800; margin-bottom: 25px; position: sticky; top: 0; z-index: 100; }
-        .question { padding: 15px 0; border-bottom: 1px solid #f0f0f0; }
-        .options label { display: block; padding: 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 5px; margin: 8px 0; cursor: pointer; }
-        .options label:hover { background: #edf2f7; }
+        /* Visibility States */
+        #registrationArea, #instructionArea, #examArea { display: none; }
+        #registrationArea { display: block; } /* Initial view */
 
-        /* Area Management */
-        #registrationArea, #startArea, #examArea { display: none; }
-        #registrationArea { display: block; } /* Show registration first */
-
-        .info-text { text-align: center; color: #4a5568; line-height: 1.6; }
+        ul.rules { text-align: left; line-height: 1.8; color: #444; }
     </style>
 </head>
 <body>
 
-<div class="container" id="examWrapper">
+<div class="container" id="mainContent">
     <header>
         <h1>Wipro Technical Assessment</h1>
-        <p>Official Recruitment Portal</p>
+        <p>35 Multiple-Choice Questions | Time Limit: 45 Minutes</p>
     </header>
 
     <div id="registrationArea">
-        <div class="section-card">
-            <h2>Candidate Registration</h2>
+        <div class="question-section">
+            <h2>Registration Details</h2>
             <form id="regForm">
-                <label for="regName">Full Name:</label>
-                <input type="text" id="regName" placeholder="Enter your full name" required>
-                
-                <label for="regEmail">Email ID:</label>
-                <input type="email" id="regEmail" placeholder="Enter your official email" required>
-                
-                <label for="regMobile">Mobile Number:</label>
-                <input type="tel" id="regMobile" placeholder="Enter 10-digit mobile number" required>
-                
-                <button type="submit" class="btn btn-reg">Register for Exam</button>
+                <label>Full Name:</label>
+                <input type="text" id="regName" required>
+                <label>Mobile Number:</label>
+                <input type="tel" id="regMobile" required>
+                <label>Email ID:</label>
+                <input type="email" id="regEmail" required>
+                <label>Branch:</label>
+                <input type="text" id="regBranch" required>
+                <label>Preliminary Score (%):</label>
+                <input type="number" id="regScore" min="0" max="100" required>
+                <button type="submit" class="btn btn-reg">Submit & Proceed</button>
             </form>
         </div>
     </div>
 
-    <div id="startArea">
-        <div class="section-card info-text">
-            <h2 style="color: #28a745; border: none;">Registration Confirmed</h2>
-            <p>You have successfully registered for the Wipro Technical Assessment.</p>
-            <blockquote>
-                <strong>Important:</strong> Clicking the button below will launch the exam in <b>Full-Screen Mode</b>. 
-                Leaving the full-screen window or switching tabs may lead to automatic submission.
-            </blockquote>
-            <button id="beginBtn" class="btn btn-start">Start Exam Now</button>
+    <div id="instructionArea">
+        <div class="question-section">
+            <h2 style="color: #d9534f;">Exam Instructions</h2>
+            <ul class="rules">
+                <li>The assessment consists of <strong>35 Questions</strong>.</li>
+                <li>Total duration is <strong>45 Minutes</strong>.</li>
+                <li><strong>Full-Screen Mode:</strong> The exam will launch in full-screen. Do not minimize or switch tabs.</li>
+                <li><strong>Auto-Submit:</strong> The form will submit automatically when the timer reaches zero.</li>
+                <li>Ensure you have a stable internet connection.</li>
+            </ul>
+            <button id="startExamBtn" class="btn btn-start">Click to Start Exam (Full Screen)</button>
         </div>
     </div>
 
     <div id="examArea">
         <div class="timer-box">Time Remaining: <span id="timer">45:00</span></div>
-        <form id="mainAssessment">
-            <div class="section-card">
-                <h2>Section 1: Technical & Quantitative</h2>
-                <div class="question">
-                    <p><strong>1.</strong> A number divided by 7 leaves a remainder of 3. What is the remainder when the same number is divided by 21?</p>
-                    <div class="options">
-                        <label><input type="radio" name="q1" value="3"> 3</label>
-                        <label><input type="radio" name="q1" value="7"> 7</label>
-                        <label><input type="radio" name="q1" value="21"> 21</label>
-                        <label><input type="radio" name="q1" value="Unknown"> Cannot be determined</label>
+        
+        <form id="assessmentForm">
+            <div class="question-section">
+                <h2>Section A: Quantitative Aptitude</h2>
+                <div class="question"><p>1. A number is divided by 7 leaves remainder 3. When divided by 21 it leaves remainder:</p>
+                    <div class="option-group">
+                        <label><input type="radio" name="q1" value="A"> A) 1</label>
+                        <label><input type="radio" name="q1" value="B"> B) 2</label>
+                        <label><input type="radio" name="q1" value="C"> C) 3</label>
+                        <label><input type="radio" name="q1" value="D"> D) Cannot be determined</label>
+                    </div>
+                </div>
+                <div class="question"><p>2. If 2^x × 4^y = 512, and x + y = 6, find x:</p>
+                    <div class="option-group">
+                        <label><input type="radio" name="q2" value="A"> A) 1</label><label><input type="radio" name="q2" value="B"> B) 2</label><label><input type="radio" name="q2" value="C"> C) 3</label><label><input type="radio" name="q2" value="D"> D) 4</label>
+                    </div>
+                </div>
+                <div class="question"><p>3. If 4 men and 6 women can complete work in 8 days, and 2 men and 3 women in 20 days, 1 woman alone:</p>
+                    <div class="option-group">
+                        <label><input type="radio" name="q3" value="A"> A) 64 days</label><label><input type="radio" name="q3" value="B"> B) 80 days</label><label><input type="radio" name="q3" value="C"> C) 96 days</label><label><input type="radio" name="q3" value="D"> D) 120 days</label>
+                    </div>
+                </div>
+                <div class="question"><p>4. If the sum of n natural numbers is 465, find n:</p>
+                    <div class="option-group">
+                        <label><input type="radio" name="q4" value="A"> A) 29</label><label><input type="radio" name="q4" value="B"> B) 30</label><label><input type="radio" name="q4" value="C"> C) 31</label><label><input type="radio" name="q4" value="D"> D) 32</label>
+                    </div>
+                </div>
+                <div class="question"><p>5. Difference between SI and CI on ₹20,000 for 2 years at 10%:</p>
+                    <div class="option-group">
+                        <label><input type="radio" name="q5" value="A"> A) ₹200</label><label><input type="radio" name="q5" value="B"> B) ₹210</label><label><input type="radio" name="q5" value="C"> C) ₹220</label><label><input type="radio" name="q5" value="D"> D) ₹240</label>
+                    </div>
+                </div>
+                <div class="question"><p>6. If log(2x) + log(5x) = 2, then x =</p>
+                    <div class="option-group">
+                        <label><input type="radio" name="q6" value="A"> A) 0.1</label><label><input type="radio" name="q6" value="B"> B) 0.2</label><label><input type="radio" name="q6" value="C"> C) 1</label><label><input type="radio" name="q6" value="D"> D) 2</label>
+                    </div>
+                </div>
+                <div class="question"><p>7. Solve: 1/(x+1) + 1/(x-1) = 1/2</p>
+                    <div class="option-group">
+                        <label><input type="radio" name="q7" value="A"> A) 1</label><label><input type="radio" name="q7" value="B"> B) 2</label><label><input type="radio" name="q7" value="C"> C) 3</label><label><input type="radio" name="q7" value="D"> D) 4</label>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-submit">Submit Assessment</button>
+
+            <div class="question-section">
+                <h2>Section B: Logical Reasoning</h2>
+                <div class="question"><p>8. Series: 3, 9, 21, 45, 93, ___</p>
+                    <div class="option-group">
+                        <label><input type="radio" name="q8" value="A"> A) 189</label><label><input type="radio" name="q8" value="B"> B) 183</label>
+                    </div>
+                </div>
+                <div class="question"><p>9. Code: If FLOWER = GQPXGT, then FUTURE = ?</p>
+                    <div class="option-group">
+                        <label><input type="radio" name="q9" value="A"> A) GVVXTF</label><label><input type="radio" name="q9" value="B"> B) GVWVTF</label><label><input type="radio" name="q9" value="C"> C) GVVWTF</label>
+                    </div>
+                </div>
+                <div class="question"><p>10. rahul said: “He is the father of my daughter’s brother.” Photo is of:</p>
+                    <div class="option-group">
+                        <label><input type="radio" name="q10" value="A"> A) Rahul</label><label><input type="radio" name="q10" value="B"> B) Father</label>
+                    </div>
+                </div>
+                <div class="question"><p>11. A is sister of B, C is father of B, D is husband of A. Relation:</p>
+                    <div class="option-group">
+                        <label><input type="radio" name="q11" value="A"> A) C is father-in-law of D</label><label><input type="radio" name="q11" value="D"> D) D is son of C</label>
+                    </div>
+                </div>
+                <div class="question"><p>12. Missing term: 7, 10, 16, 28, 52, ___</p>
+                    <div class="option-group"><label><input type="radio" name="q12" value="D"> D) 100</label></div>
+                </div>
+                <div class="question"><p>13. All pens are books. All books are papers. Conclusion:</p>
+                    <div class="option-group"><label><input type="radio" name="q13" value="A"> A) All pens are papers</label></div>
+                </div>
+                <div class="question"><p>14. Choose the odd matrix (set):</p>
+                    <div class="option-group"><label><input type="radio" name="q14" value="B"> B) 3, 5, 7, 9</label></div>
+                </div>
+            </div>
+
+            <div class="question-section">
+                <h2>Section C: English</h2>
+                <div class="question"><p>15. Correct sentence:</p>
+                    <div class="option-group"><label><input type="radio" name="q15" value="B"> B) Neither John nor his friends were present</label></div>
+                </div>
+                <div class="question"><p>16. Synonym of AUSPICIOUS:</p>
+                    <div class="option-group"><label><input type="radio" name="q16" value="C"> C) Lucky</label></div>
+                </div>
+                <div class="question"><p>17. Identify error: “Each of the participants have submitted their forms.”</p>
+                    <div class="option-group"><label><input type="radio" name="q17" value="C"> C) have submitted</label></div>
+                </div>
+                <div class="question"><p>18. Antonym of Lucid:</p>
+                    <div class="option-group"><label><input type="radio" name="q18" value="C"> C) Confusing</label></div>
+                </div>
+                <div class="question"><p>19. Idiom: “To take with a grain of salt”</p>
+                    <div class="option-group"><label><input type="radio" name="q19" value="B"> B) To disbelieve slightly</label></div>
+                </div>
+                <div class="question"><p>20. Which sentence is in passive voice?</p>
+                    <div class="option-group"><label><input type="radio" name="q20" value="B"> B) A letter is written by him</label></div>
+                </div>
+            </div>
+
+            <div class="question-section">
+                <h2>Section D: Technical</h2>
+                <div class="question"><p>21. Worst-case time complexity of QuickSort:</p>
+                    <div class="option-group"><label><input type="radio" name="q21" value="C"> C) O(n^2)</label></div>
+                </div>
+                <div class="question"><p>22. Which is not a feature of OOP?</p>
+                    <div class="option-group"><label><input type="radio" name="q22" value="C"> C) Recursion</label></div>
+                </div>
+                <div class="question"><p>23. Data structure used for BFS?</p>
+                    <div class="option-group"><label><input type="radio" name="q23" value="B"> B) Queue</label></div>
+                </div>
+                <div class="question"><p>24. Index structure used in relational DBs?</p>
+                    <div class="option-group"><label><input type="radio" name="q24" value="B"> B) B+ Tree</label></div>
+                </div>
+                <div class="question"><p>25. Output: int a=5;printf("%d %d", a++, ++a);</p>
+                    <div class="option-group"><label><input type="radio" name="q25" value="C"> C) Undefined behavior</label></div>
+                </div>
+            </div>
+
+            <div class="question-section">
+                <h2>Section E: General & Technical Mix</h2>
+                <div class="question"><p>26. Python output: print(2**3**2)</p>
+                    <div class="option-group"><label><input type="radio" name="q26" value="B"> B) 512</label></div>
+                </div>
+                <div class="question"><p>27. Non-linear data structure?</p>
+                    <div class="option-group"><label><input type="radio" name="q27" value="D"> D) Tree</label></div>
+                </div>
+                <div class="question"><p>28. CP of 20 = SP of 16, profit %:</p>
+                    <div class="option-group"><label><input type="radio" name="q28" value="B"> B) 25%</label></div>
+                </div>
+                <div class="question"><p>29. Difference between process and thread?</p>
+                    <div class="option-group"><label><input type="radio" name="q29" value="D"> D) All of the above</label></div>
+                </div>
+                <div class="question"><p>30. Synonym of 'Ephemeral':</p>
+                    <div class="option-group"><label><input type="radio" name="q30" value="B"> B) Short-lived</label></div>
+                </div>
+                <div class="question"><p>31. Next term: 1, 8, 27, 64, ___</p>
+                    <div class="option-group"><label><input type="radio" name="q31" value="B"> B) 125</label></div>
+                </div>
+                <div class="question"><p>32. Converting object to bytes:</p>
+                    <div class="option-group"><label><input type="radio" name="q32" value="B"> B) Serialization</label></div>
+                </div>
+                <div class="question"><p>33. Max nodes in binary tree of height 'h':</p>
+                    <div class="option-group"><label><input type="radio" name="q33" value="A"> A) 2^(h+1) - 1</label></div>
+                </div>
+                <div class="question"><p>34. What is 'Normalization' in DBMS?</p>
+                    <div class="option-group"><label><input type="radio" name="q34" value="D"> D) Both A and B</label></div>
+                </div>
+                <div class="question"><p>35. Idiom: 'A penny for your ___'</p>
+                    <div class="option-group"><label><input type="radio" name="q35" value="B"> B) Thoughts</label></div>
+                </div>
+            </div>
+
+            <input type="submit" value="Final Submit" class="btn btn-submit" id="submitButton">
         </form>
     </div>
 </div>
 
 <script>
-    // Initialize EmailJS (Replace with your keys)
-    (function() { emailjs.init("YOUR_PUBLIC_KEY"); })();
-
     const regForm = document.getElementById('regForm');
     const registrationArea = document.getElementById('registrationArea');
-    const startArea = document.getElementById('startArea');
+    const instructionArea = document.getElementById('instructionArea');
     const examArea = document.getElementById('examArea');
-    const beginBtn = document.getElementById('beginBtn');
+    const startExamBtn = document.getElementById('startExamBtn');
+    const assessmentForm = document.getElementById('assessmentForm');
+    const timerDisplay = document.getElementById('timer');
 
-    // 1. Logic for Registration Submission
+    // 1. Handle Registration
     regForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        // Hide registration, show "Start Exam" screen
         registrationArea.style.display = 'none';
-        startArea.style.display = 'block';
+        instructionArea.style.display = 'block';
     });
 
-    // 2. Logic for Starting Exam & Full Screen
-    beginBtn.addEventListener('click', () => {
-        const docEl = document.documentElement;
-
-        // Trigger Full Screen
-        if (docEl.requestFullscreen) { docEl.requestFullscreen(); }
-        else if (docEl.mozRequestFullScreen) { docEl.mozRequestFullScreen(); }
-        else if (docEl.webkitRequestFullscreen) { docEl.webkitRequestFullscreen(); }
-        else if (docEl.msRequestFullscreen) { docEl.msRequestFullscreen(); }
-
-        // Switch to Exam Area
-        startArea.style.display = 'none';
+    // 2. Start Exam & Fullscreen
+    startExamBtn.addEventListener('click', () => {
+        launchFullScreen(document.documentElement);
+        instructionArea.style.display = 'none';
         examArea.style.display = 'block';
-
-        // Start Timer
-        runTimer();
+        startTimer();
     });
 
-    // 3. Exam Timer Logic
-    let timeLeft = 45 * 60; 
-    function runTimer() {
-        const display = document.getElementById('timer');
-        const countdown = setInterval(() => {
-            let minutes = Math.floor(timeLeft / 60);
-            let seconds = timeLeft % 60;
-            display.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    function launchFullScreen(element) {
+        if(element.requestFullscreen) element.requestFullscreen();
+        else if(element.webkitRequestFullscreen) element.webkitRequestFullscreen();
+        else if(element.mozRequestFullScreen) element.mozRequestFullScreen();
+        else if(element.msRequestFullscreen) element.msRequestFullscreen();
+    }
+
+    // 3. Timer Logic (45 Mins)
+    let timeRemaining = 45 * 60;
+    function startTimer() {
+        const interval = setInterval(() => {
+            let mins = Math.floor(timeRemaining / 60);
+            let secs = timeRemaining % 60;
+            timerDisplay.textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
             
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                alert("Assessment time has expired. Submitting your answers.");
-                document.getElementById('mainAssessment').submit();
+            if (timeRemaining <= 0) {
+                clearInterval(interval);
+                alert("Time is up! Submitting automatically.");
+                assessmentForm.submit();
             }
-            timeLeft--;
+            timeRemaining--;
         }, 1000);
     }
 
-    // Basic anti-cheat: Prevent right-click
-    document.addEventListener('contextmenu', event => event.preventDefault());
+    // 4. Submission Logic
+    assessmentForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert("Assessment Submitted Successfully!");
+        const inputs = assessmentForm.querySelectorAll('input');
+        inputs.forEach(i => i.disabled = true);
+        document.getElementById('submitButton').value = "Submitted";
+        document.getElementById('submitButton').disabled = true;
+    });
 </script>
 
 </body>
