@@ -6,30 +6,40 @@
     <title>Wipro Technical Assessment</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; }
-        .container { width: 95%; max-width: 700px; margin: 20px auto; padding: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); border-radius: 8px; }
-        header { text-align: center; padding-bottom: 10px; border-bottom: 2px solid #007bff; margin-bottom: 20px; }
-        .timer-box { background-color: #ffdddd; color: #d9534f; padding: 10px; border-radius: 5px; text-align: center; font-size: 1.4em; font-weight: bold; margin-bottom: 25px; border: 1px solid #d9534f; }
-        .question-section { margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 6px; background-color: #fafafa; }
-        .question-section h2 { border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-top: 0; color: #007bff; }
-        .question { margin-bottom: 20px; padding: 10px; border-bottom: 1px dashed #eee; }
-        .option-group label { display: block; margin-bottom: 5px; padding: 8px; border-radius: 4px; cursor: pointer; }
-        input[type="text"], input[type="tel"], input[type="email"], input[type="number"] { width: 95%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; transition: background-color 0.5s; }
+        .container { width: 95%; max-width: 800px; margin: 40px auto; padding: 30px; background-color: #fff; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); border-radius: 12px; }
         
-        /* Buttons */
-        .btn { display: block; width: 100%; padding: 12px; border: none; border-radius: 5px; font-size: 1.2em; cursor: pointer; margin-top: 25px; color: white; transition: 0.3s; }
+        /* Fullscreen styles */
+        :fullscreen body { background-color: #fff; }
+        :fullscreen .container { width: 100%; max-width: 100%; height: 100vh; margin: 0; border-radius: 0; box-shadow: none; overflow-y: auto; }
+
+        header { text-align: center; padding-bottom: 15px; border-bottom: 3px solid #007bff; margin-bottom: 25px; }
+        .timer-box { background-color: #fff5f5; color: #d9534f; padding: 15px; border-radius: 8px; text-align: center; font-size: 1.5em; font-weight: bold; margin-bottom: 25px; border: 2px solid #f5c6cb; position: sticky; top: 0; z-index: 100; }
+        
+        .question-section { margin-bottom: 30px; padding: 20px; border: 1px solid #e1e4e8; border-radius: 8px; background-color: #ffffff; }
+        .question-section h2 { color: #007bff; margin-top: 0; }
+        
+        .question { margin-bottom: 20px; padding: 15px; border-bottom: 1px solid #eee; }
+        .option-group label { display: block; margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px; cursor: pointer; transition: 0.2s; }
+        .option-group label:hover { background: #e9ecef; }
+
+        input[type="text"], input[type="tel"], input[type="email"] { width: 100%; padding: 12px; margin-top: 8px; border: 1px solid #ced4da; border-radius: 5px; box-sizing: border-box; }
+        
+        .btn { display: block; width: 100%; padding: 15px; border: none; border-radius: 6px; font-size: 1.1em; font-weight: bold; cursor: pointer; margin-top: 20px; color: white; transition: background 0.3s; }
         .btn-reg { background-color: #007bff; }
+        .btn-reg:hover { background-color: #0056b3; }
         .btn-submit { background-color: #28a745; }
         .btn-start { background-color: #6f42c1; display: none; }
 
-        #examArea { display: none; } /* Hidden by default */
+        #examArea { display: none; }
         #registrationArea { display: block; }
-        #successMessage { display: none; text-align: center; color: #28a745; }
+        #successMessage { display: none; text-align: center; padding: 20px; }
+        .warning { color: #856404; background-color: #fff3cd; padding: 10px; border-radius: 5px; margin: 10px 0; font-size: 0.9em; }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="mainContainer">
     <header>
         <h1>Wipro Technical Assessment</h1>
         <p>Official Recruitment Portal</p>
@@ -41,15 +51,15 @@
             <form id="regForm">
                 <div class="question">
                     <label>Full Name:</label>
-                    <input type="text" id="regName" required>
+                    <input type="text" id="regName" placeholder="Enter your full name" required>
                 </div>
                 <div class="question">
                     <label>Email ID:</label>
-                    <input type="email" id="regEmail" required>
+                    <input type="email" id="regEmail" placeholder="Enter your official email" required>
                 </div>
                 <div class="question">
                     <label>Mobile Number:</label>
-                    <input type="tel" id="regMobile" required>
+                    <input type="tel" id="regMobile" placeholder="Enter 10-digit mobile number" required>
                 </div>
                 <button type="submit" class="btn btn-reg">Register for Exam</button>
             </form>
@@ -57,12 +67,13 @@
     </div>
 
     <div id="successMessage">
-        <h2>Registration Successful!</h2>
-        <p>A "Congratulations" mail has been sent to your inbox with your unique exam link.</p>
-        <p><strong>Please check your email.</strong></p>
-        <hr>
-        <p>Or, if you are ready to start now in full-screen mode:</p>
-        <button id="startFullscreen" class="btn btn-start">Go Full Screen & Start Exam</button>
+        <h2 style="color: #28a745;">Registration Successful!</h2>
+        <p>Your details have been recorded. You are now eligible to start the assessment.</p>
+        <div class="warning">
+            <strong>Note:</strong> Once you click start, the exam will enter <b>Full-Screen Mode</b>. 
+            Exiting full-screen or switching tabs may result in disqualification.
+        </div>
+        <button id="startFullscreen" class="btn btn-start">Start Exam Now</button>
     </div>
 
     <div id="examArea">
@@ -73,12 +84,14 @@
                 <div class="question">
                     <p>1. A number is divided by 7 leaves remainder 3. When divided by 21 it leaves remainder:</p>
                     <div class="option-group">
+                        <label><input type="radio" name="q1" value="A"> A) 1</label>
+                        <label><input type="radio" name="q1" value="B"> B) 2</label>
                         <label><input type="radio" name="q1" value="C"> C) 3</label>
                         <label><input type="radio" name="q1" value="D"> D) Cannot be determined</label>
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Final Submit" class="btn btn-submit" id="submitButton">
+            <button type="submit" class="btn btn-submit" id="submitButton">Final Submit</button>
         </form>
     </div>
 </div>
@@ -86,7 +99,7 @@
 <script>
     // --- INITIALIZE EMAILJS ---
     (function() {
-        emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your Public Key
+        emailjs.init("YOUR_PUBLIC_KEY"); // REPLACE THIS
     })();
 
     const regForm = document.getElementById('regForm');
@@ -94,48 +107,50 @@
     const successMessage = document.getElementById('successMessage');
     const startBtn = document.getElementById('startFullscreen');
     const examArea = document.getElementById('examArea');
+    const mainContainer = document.getElementById('mainContainer');
 
-    // 1. REGISTRATION & EMAIL LOGIC
+    // 1. REGISTRATION LOGIC
     regForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
         const name = document.getElementById('regName').value;
         const email = document.getElementById('regEmail').value;
-        const examLink = window.location.href + "?status=eligible&user=" + btoa(email);
 
-        // Send Email via EmailJS
-        const templateParams = {
+        // Simulate Email Sending (EmailJS)
+        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
             to_name: name,
             to_email: email,
-            message: "Congratulations! You have been shortlisted for the Wipro Technical Assessment.",
-            long_exam_link: examLink 
-        };
-
-        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
-            .then(() => {
-                alert("Registration successful! Check your mail.");
-                registrationArea.style.display = 'none';
-                successMessage.style.display = 'block';
-                startBtn.style.display = 'block';
-            }, (error) => {
-                alert("Failed to send email. Please try again.");
-                console.log("EmailJS Error:", error);
-            });
+            message: "Your exam registration is confirmed."
+        }).then(() => {
+            registrationArea.style.display = 'none';
+            successMessage.style.display = 'block';
+            startBtn.style.display = 'block';
+        }).catch((err) => {
+            alert("Proceeding to exam (Email notification failed)");
+            registrationArea.style.display = 'none';
+            successMessage.style.display = 'block';
+            startBtn.style.display = 'block';
+        });
     });
 
-    // 2. FULL SCREEN & START EXAM LOGIC
+    // 2. FULL SCREEN & START EXAM
     startBtn.addEventListener('click', () => {
-        launchFullScreen(document.documentElement);
+        enterFullScreen(document.documentElement); // Entire page goes full screen
         successMessage.style.display = 'none';
         examArea.style.display = 'block';
         startTimer();
     });
 
-    function launchFullScreen(element) {
-        if(element.requestFullscreen) { element.requestFullscreen(); }
-        else if(element.mozRequestFullScreen) { element.mozRequestFullScreen(); }
-        else if(element.webkitRequestFullscreen) { element.webkitRequestFullscreen(); }
-        else if(element.msRequestFullscreen) { element.msRequestFullscreen(); }
+    function enterFullScreen(element) {
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) { // Firefox
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) { // Chrome, Safari, Opera
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) { // IE/Edge
+            element.msRequestFullscreen();
+        }
     }
 
     // 3. TIMER LOGIC
@@ -146,25 +161,18 @@
             let mins = Math.floor(timeRemaining / 60);
             let secs = timeRemaining % 60;
             timerDisplay.textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            
             if (timeRemaining <= 0) {
                 clearInterval(interval);
-                alert("Time is up!");
+                alert("Time is up! Your responses are being submitted.");
                 document.getElementById('assessmentForm').submit();
             }
             timeRemaining--;
         }, 1000);
     }
 
-    // 4. CHECK IF USER CAME FROM THE EMAIL LINK
-    window.onload = () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('status') === 'eligible') {
-            registrationArea.style.display = 'none';
-            successMessage.innerHTML = "<h2>Welcome Back!</h2><p>Click below to begin your exam in full-screen.</p>";
-            successMessage.style.display = 'block';
-            startBtn.style.display = 'block';
-        }
-    };
+    // Prevent right-click to add basic security
+    document.addEventListener('contextmenu', event => event.preventDefault());
 </script>
 
 </body>
